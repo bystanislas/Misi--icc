@@ -13,13 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!form) return;
 
   /* --- Les métiers dépendent des secteurs cochés ---------------- */
-  const blocsMetiers = [...form.querySelectorAll("[data-metiers-de]")];
   const aide = form.querySelector("[data-aide-metiers]");
 
   function majMetiers() {
     const coches = [...form.querySelectorAll('input[name="secteurs"]:checked')].map((c) => c.value);
     let visibles = 0;
-    blocsMetiers.forEach((b) => {
+    // Requête à chaque fois : les blocs peuvent être reconstruits (référentiels).
+    form.querySelectorAll("[data-metiers-de]").forEach((b) => {
       const actif = coches.includes(b.dataset.metiersDe);
       b.classList.toggle("hidden", !actif);
       if (actif) visibles++;
@@ -29,8 +29,72 @@ document.addEventListener("DOMContentLoaded", () => {
     aide.classList.toggle("hidden", visibles > 0);
   }
 
-  form.querySelectorAll('input[name="secteurs"]').forEach((c) => c.addEventListener("change", majMetiers));
+  form.addEventListener("change", (e) => {
+    if (e.target.name === "secteurs") majMetiers();
+  });
   majMetiers();
+
+  /* --- Listes issues des référentiels de l'administration ------- */
+  // Le HTML embarque les listes du fichier statique. Si l'administration
+  // les a modifiées (config/referentiels), on les reconstruit à l'identique
+  // en conservant ce qui a déjà été coché.
+  const zone = (nom) => form.querySelector(`input[name="${nom}"]`)?.closest(".grid");
+  const zones = {
+    secteurs: form.querySelector("[data-champ-secteurs]"),
+    metiers: form.querySelector("[data-champ-metiers]"),
+    besoins: zone("besoins"),
+    interets: zone("interets"),
+    age: zone("age"),
+  };
+
+  const caseHtml = (type, nom, valeur, libelle) => `
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50">
+              <input type="${type}" name="${nom}" value="${esc(valeur)}"
+                     class="h-4 w-4 shrink-0 ${type === "checkbox" ? "rounded " : ""}border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">${esc(libelle)}</span>
+            </label>`;
+  const options = (select, valeurs) => {
+    const actuelle = select.value;
+    select.innerHTML = valeurs
+      .map((v) => `<option${v === actuelle ? " selected" : ""}>${esc(v)}</option>`)
+      .join("");
+  };
+
+  function reconstruire(ref) {
+    const coches = new Set([...form.querySelectorAll("input:checked")].map((i) => i.name + "\u0000" + i.value));
+
+    zones.secteurs.innerHTML = Object.keys(ref.secteurs).map((s) => caseHtml("checkbox", "secteurs", s, s)).join("");
+    zones.metiers.innerHTML = Object.entries(ref.metiers)
+      .map(
+        ([secteur, liste]) => `
+          <div class="hidden" data-metiers-de="${esc(secteur)}">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">${esc(secteur)}</p>
+            <div class="grid gap-1 sm:grid-cols-2">${liste.map(([m]) => caseHtml("checkbox", "metiers", m, m)).join("")}
+            </div>
+          </div>`,
+      )
+      .join("");
+    // « Autre besoin » sert au classement interne : absent du formulaire d'origine.
+    zones.besoins.innerHTML = Object.values(ref.besoins)
+      .filter((b) => b.id !== "autre")
+      .map((b) => caseHtml("checkbox", "besoins", b.court, b.label))
+      .join("");
+    zones.interets.innerHTML = ref.interets.map((x) => caseHtml("checkbox", "interets", x, x)).join("");
+    zones.age.innerHTML = ref.ages.map((a) => caseHtml("radio", "age", a.id, a.label)).join("");
+    options(el("#i-exp"), ref.niveaux.map((n) => n.label));
+    if (ref.familles?.length) options(el("#i-famille"), ref.familles);
+
+    form.querySelectorAll("input[name]").forEach((i) => {
+      if (coches.has(i.name + "\u0000" + i.value)) i.checked = true;
+    });
+    majMetiers();
+  }
+
+  if (typeof Data !== "undefined") {
+    const appliquer = () => Data.refSource === "firestore" && reconstruire(Data.ref);
+    Data.charger().then(appliquer).catch(() => {});
+    addEventListener("misi:membres", appliquer);
+  }
 
   /* --- Les communes dépendent de la ville ----------------------- */
   const selVille = el("#i-ville");

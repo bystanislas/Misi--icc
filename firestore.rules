@@ -62,9 +62,10 @@ service cloud.firestore {
       allow read, update, delete: if estAdmin();
     }
 
-    // Paramètres de l'administration.
+    // Paramètres de l'administration ; les référentiels sont lus par le site.
     match /config/{id} {
-      allow read, write: if estAdmin();
+      allow read: if id == "referentiels" || estAdmin();
+      allow write: if estAdmin();
     }
 
     // File d'envoi de l'extension « Trigger Email » : elle écrit avec le

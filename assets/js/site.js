@@ -93,71 +93,81 @@ const Data = {
 
   charger() {
     if (!this._promesse) {
-      // Le fichier statique fournit les référentiels ET les membres : la page
-      // s'affiche dès qu'il est là. La lecture Firestore part en arrière-plan
-      // et ne bloque rien — faire attendre l'affichage pour une base souvent
-      // vide coûtait une seconde de page blanche à chaque première visite.
+      // Le fichier statique fournit les référentiels ET les membres, et reste
+      // le repli de toujours. Firestore (alimenté par l'administration) prend
+      // le dessus :
+      //  - copie locale récente (< 10 min) : affichage immédiat, rafraîchi
+      //    en arrière-plan ;
+      //  - sinon (première visite, copie ancienne) : on attend Firestore,
+      //    plafonné à 2,5 s par FB, pour que chaque page affiche d'emblée
+      //    les données à jour. Au-delà, le fichier statique s'affiche.
       this._promesse = fetch("data/membres.json", { cache: "no-cache" })
         .then((r) => {
           if (!r.ok) throw new Error("HTTP " + r.status);
           return r.json();
         })
-        .then((d) => {
+        .then(async (d) => {
           this.ref = d.referentiels;
           this.genereLe = d.genereLe;
           this.membres = d.membres;
           this.source = "fichier";
-          // Dernière copie Firestore connue : affichée tout de suite, sans
-          // attendre le SDK. Les modifications faites dans l'administration
-          // apparaissent ainsi dès la visite suivante sur toutes les pages.
+
           const cache = this._lireCache();
-          if (cache) {
-            this.membres = cache.membres;
-            this.genereLe = cache.le;
-            this.source = "firestore";
-          }
-          this._enrichirDepuisFirestore();
+          if (cache) this._appliquer(cache);
+          const recent = cache && Date.now() - Date.parse(cache.le) < 10 * 60e3;
+          const distant = this._enrichirDepuisFirestore();
+          if (!recent) await distant;
           return d;
         });
     }
     return this._promesse;
   },
 
+  _appliquer({ le, membres, ref }) {
+    if (membres?.length) {
+      this.membres = membres;
+      this.source = "firestore";
+      this.genereLe = le;
+    }
+    if (ref) {
+      this.ref = ref;
+      this.refSource = "firestore";
+    }
+  },
+
   /**
-   * Remplace les membres par ceux de Firestore s'il y en a, puis prévient
-   * la page via l'évènement « misi:membres ». Les pages qui n'écoutent pas
-   * continuent d'afficher le fichier statique, qui reste juste.
+   * Lit membres et référentiels Firestore, les applique, met la copie
+   * locale à jour et prévient la page par « misi:membres » si l'affichage
+   * a changé (l'annuaire se ré-affiche alors). Ne rejette jamais.
    */
   _enrichirDepuisFirestore() {
-    if (typeof FB === "undefined") return;
-    FB.chargerMembres()
-      .then((distants) => {
-        if (!distants?.length) return;
-        const le = new Date().toISOString();
-        const identique = JSON.stringify(distants) === JSON.stringify(this.membres);
-        this._ecrireCache({ le, membres: distants });
-        if (identique) return;
-        this.membres = distants;
-        this.source = "firestore";
-        this.genereLe = le;
-        dispatchEvent(new CustomEvent("misi:membres", { detail: { source: "firestore" } }));
+    if (typeof FB === "undefined") return Promise.resolve();
+    return Promise.all([FB.chargerMembres(), FB.chargerReferentiels()])
+      .then(([membres, ref]) => {
+        if (!membres?.length && !ref) return;
+        const avant = JSON.stringify([this.membres, this.ref]);
+        const frais = { le: new Date().toISOString(), membres: membres?.length ? membres : null, ref };
+        this._ecrireCache(frais);
+        this._appliquer(frais);
+        if (JSON.stringify([this.membres, this.ref]) !== avant)
+          dispatchEvent(new CustomEvent("misi:membres", { detail: { source: "firestore" } }));
       })
       .catch(() => {
-        /* déjà journalisé par FB.chargerMembres */
+        /* déjà journalisé par FB */
       });
   },
 
   _lireCache() {
     try {
-      const c = JSON.parse(localStorage.getItem("misi-membres-firestore") || "null");
-      return c?.membres?.length ? c : null;
+      const c = JSON.parse(localStorage.getItem("misi-firestore-v2") || "null");
+      return c?.membres?.length || c?.ref ? c : null;
     } catch {
       return null;
     }
   },
   _ecrireCache(c) {
     try {
-      localStorage.setItem("misi-membres-firestore", JSON.stringify(c));
+      localStorage.setItem("misi-firestore-v2", JSON.stringify(c));
     } catch {
       /* stockage plein ou bloqué : sans conséquence */
     }

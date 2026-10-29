@@ -122,6 +122,29 @@ const FB = {
     }
   },
 
+  /**
+   * Référentiels modifiés depuis l'administration (config/referentiels).
+   * Renvoie null si le document n'existe pas : le fichier statique reste juste.
+   */
+  async chargerReferentiels() {
+    // Coupe-circuit commun : base vide ou injoignable, inutile d'insister.
+    if (!firebaseActif() || this._horsService()) return null;
+    try {
+      const lecture = (async () => {
+        const { db, doc, getDoc } = await this._charger();
+        const snap = await getDoc(doc(db, "config", "referentiels"));
+        return snap.exists() ? refDepuisFirestore(snap.data()) : null;
+      })();
+      const limite = new Promise((_, rejeter) =>
+        setTimeout(() => rejeter(new Error("délai dépassé")), 2500),
+      );
+      return await Promise.race([lecture, limite]);
+    } catch (e) {
+      console.warn("Référentiels Firestore indisponibles, repli sur le fichier statique.", e.message);
+      return null;
+    }
+  },
+
   /** Candidature spontanée ou offre proposée (page « Emploi »). */
   async enregistrerEmploi(nomCollection, donnees) {
     if (!firebaseActif()) return false;
@@ -146,3 +169,42 @@ const FB = {
     return true;
   },
 };
+
+/* ==================================================================
+ * Référentiels : format du site ⇄ format Firestore.
+ *
+ * Firestore trie les clés des maps et refuse les tableaux imbriqués :
+ * on stocke donc des tableaux d'objets, dans l'ordre d'affichage, et on
+ * reconstruit ici la forme attendue par site.js (celle de membres.json).
+ * Partagé par le site public et l'administration.
+ * ================================================================== */
+
+function refVersFirestore(ref) {
+  return {
+    version: 1,
+    secteurs: Object.entries(ref.secteurs || {}).map(([nom, s]) => ({ nom, icone: s.icone || "autre" })),
+    metiers: Object.entries(ref.metiers || {}).map(([secteur, liste]) => ({
+      secteur,
+      liste: liste.map(([nom, mots]) => ({ nom, mots: mots || [] })),
+    })),
+    besoins: Object.entries(ref.besoins || {}).map(([cle, b]) => ({ cle, id: b.id, label: b.label, court: b.court })),
+    apports: Object.values(ref.apports || {}).map((a) => ({ id: a.id, label: a.label })),
+    niveaux: ref.niveaux || [],
+    ages: ref.ages || [],
+    interets: ref.interets || [],
+    ...(ref.familles ? { familles: ref.familles } : {}),
+  };
+}
+
+function refDepuisFirestore(f) {
+  return {
+    secteurs: Object.fromEntries((f.secteurs || []).map((s) => [s.nom, { icone: s.icone || "autre" }])),
+    metiers: Object.fromEntries((f.metiers || []).map((m) => [m.secteur, m.liste.map((x) => [x.nom, x.mots || []])])),
+    besoins: Object.fromEntries((f.besoins || []).map((b) => [b.cle || b.court, { id: b.id, label: b.label, court: b.court }])),
+    apports: Object.fromEntries((f.apports || []).map((a) => [a.id, { id: a.id, label: a.label }])),
+    niveaux: f.niveaux || [],
+    ages: f.ages || [],
+    interets: f.interets || [],
+    ...(f.familles ? { familles: f.familles } : {}),
+  };
+}

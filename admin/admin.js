@@ -160,6 +160,12 @@ function synchroniser() {
 const docs = (nom) => etat.donnees[nom] || [];
 const reglages = () => docs("config").find((d) => d.id === "admin") || {};
 
+/** Référentiels en vigueur : ceux de l'administration, sinon le fichier statique. */
+function refCourant() {
+  const f = docs("config").find((d) => d.id === "referentiels");
+  return f ? refDepuisFirestore(f) : etat.ref;
+}
+
 async function chargerReferentiels() {
   try {
     const r = await fetch("/data/membres.json", { cache: "no-cache" });
@@ -271,7 +277,7 @@ const fermerModale = () => modale().open && modale().close();
  * 5. Membres
  * ---------------------------------------------------------------- */
 function optionsMembre() {
-  const r = etat.ref;
+  const r = refCourant();
   return {
     secteurs: Object.keys(r.secteurs || {}),
     metiers: Object.values(r.metiers || {}).flatMap((l) => l.map((x) => x[0])),
@@ -280,6 +286,7 @@ function optionsMembre() {
     niveaux: (r.niveaux || []).map((n) => n.label),
     ages: (r.ages || []).map((a) => [a.id, a.label]),
     interets: r.interets || [],
+    familles: r.familles || FAMILLES_DEFAUT,
   };
 }
 
@@ -301,7 +308,7 @@ function champsMembre() {
     { k: "commune", label: "Commune" },
     { k: "quartier", label: "Quartier" },
     { k: "departement", label: "Département / ministère" },
-    { k: "famille", label: "Famille d’église" },
+    { k: "famille", label: "Famille d’église", liste: o.familles },
     { k: "besoins", label: "Recherche (besoins)", type: "cases", options: o.besoins },
     { k: "apports", label: "Peut apporter", type: "cases", options: o.apports },
     { k: "interets", label: "Centres d’intérêt", type: "cases", options: o.interets },
@@ -324,7 +331,7 @@ const initiales = (nom) =>
 
 /** Complète les champs dérivés attendus par le site public (site.js). */
 function normaliserMembre(saisie) {
-  const niveau = (etat.ref.niveaux || []).find((n) => n.label === saisie.experience);
+  const niveau = (refCourant().niveaux || []).find((n) => n.label === saisie.experience);
   const secteurs = liste(saisie.secteurs);
   const metiers = Array.isArray(saisie.metiers)
     ? liste(saisie.metiers)
@@ -358,7 +365,7 @@ function normaliserMembre(saisie) {
 
 /** Pré-remplit un profil à partir d'une inscription du formulaire « Rejoindre ». */
 function membreDepuisInscription(i) {
-  const besoinsRef = Object.values(etat.ref.besoins || {});
+  const besoinsRef = Object.values(refCourant().besoins || {});
   const besoins = liste(i.besoins)
     .map((v) => besoinsRef.find((b) => [b.id, b.court, b.label].map(sansAccents).includes(sansAccents(v)))?.id)
     .filter(Boolean);
@@ -481,7 +488,7 @@ function exporterMembres() {
   const fichier = {
     genereLe: new Date().toISOString(),
     confidentialite: etat.fichier?.confidentialite || "Aucune donnée de contact (email, téléphone, adresse) n'est publiée.",
-    referentiels: etat.ref,
+    referentiels: refCourant(),
     membres,
   };
   const url = URL.createObjectURL(new Blob([JSON.stringify(fichier)], { type: "application/json" }));
@@ -1086,7 +1093,293 @@ function brancherAdmins(v) {
 }
 
 /* ---------------------------------------------------------------- *
- * 8 bis. Paramètres et journal d'envoi
+ * 8 bis. Référentiels (secteurs, métiers, besoins…)
+ * ---------------------------------------------------------------- */
+// Pictogrammes disponibles dans site.js (jeu d'icônes du site public).
+const ICONES = ["agriculture", "autre", "banque", "batiment", "com", "commerce", "droit", "education",
+  "fusee", "ingenierie", "maison", "media", "politique", "sante", "tech"];
+// Familles du formulaire d'inscription (rejoindre.html), absentes de membres.json.
+const FAMILLES_DEFAUT = ["Famille Pierre", "Famille Paul", "Famille Jean", "Famille Jacques", "Famille André", "Invité"];
+
+const lignes = (texte) =>
+  String(texte || "")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
+const colonnes = (ligne) => ligne.split("|").map((c) => c.trim());
+
+/** Référentiels → texte éditable, une entrée par ligne. */
+function refEnTexte(ref) {
+  return {
+    secteurs: Object.entries(ref.secteurs).map(([n, s]) => `${n} | ${s.icone}`).join("\n"),
+    besoins: Object.values(ref.besoins).map((b) => `${b.id} | ${b.court} | ${b.label}`).join("\n"),
+    apports: Object.values(ref.apports).map((a) => `${a.id} | ${a.label}`).join("\n"),
+    ages: ref.ages.map((a) => `${a.id} | ${a.label}`).join("\n"),
+    interets: ref.interets.join("\n"),
+    familles: (ref.familles || FAMILLES_DEFAUT).join("\n"),
+    ...Object.fromEntries(
+      Object.keys(ref.secteurs).map((sect, i) => [
+        "metiers-" + i,
+        (ref.metiers[sect] || []).map(([m, mots]) => (mots.length ? `${m} | ${mots.join(", ")}` : m)).join("\n"),
+      ]),
+    ),
+  };
+}
+
+/** Texte éditable → référentiels. Lève une Error lisible au premier problème. */
+function texteEnRef(v, ancien) {
+  const unique = (valeurs, quoi) => {
+    const vus = new Set();
+    for (const x of valeurs) {
+      if (vus.has(x)) throw new Error(`${quoi} en double : « ${x} »`);
+      vus.add(x);
+    }
+  };
+  const ident = (id, quoi) => {
+    if (!/^[a-z0-9+-]+$/.test(id)) throw new Error(`${quoi} : identifiant « ${id} » invalide (minuscules, chiffres, - ou +).`);
+    return id;
+  };
+
+  const secteurs = lignes(v.secteurs).map((l) => {
+    const [nom, icone = "autre"] = colonnes(l);
+    if (!ICONES.includes(icone)) throw new Error(`Secteur « ${nom} » : icône « ${icone} » inconnue.`);
+    return [nom, { icone }];
+  });
+  unique(secteurs.map(([n]) => n), "Secteur");
+
+  const anciensSecteurs = Object.keys(ancien.secteurs);
+  const metiers = secteurs.map(([nom]) => {
+    const i = anciensSecteurs.indexOf(nom);
+    const liste = i < 0 ? [] : lignes(v["metiers-" + i]).map((l) => {
+      const [m, mots = ""] = colonnes(l);
+      return [m, mots.split(",").map((x) => x.trim()).filter(Boolean)];
+    });
+    unique(liste.map(([m]) => m), `Métier (${nom})`);
+    return [nom, liste];
+  });
+
+  const besoins = lignes(v.besoins).map((l) => {
+    const [id, court, label] = colonnes(l);
+    if (!court || !label) throw new Error(`Besoin « ${l} » : format attendu « id | libellé court | libellé ».`);
+    const cle = Object.entries(ancien.besoins).find(([, b]) => b.id === id)?.[0] || court;
+    return [cle, { id: ident(id, "Besoin"), label, court }];
+  });
+  unique(besoins.map(([, b]) => b.id), "Besoin");
+
+  const parId = (texte, quoi) =>
+    lignes(texte).map((l) => {
+      const [id, label] = colonnes(l);
+      if (!label) throw new Error(`${quoi} « ${l} » : format attendu « id | libellé ».`);
+      return { id: ident(id, quoi), label };
+    });
+  const apports = parId(v.apports, "Apport");
+  unique(apports.map((a) => a.id), "Apport");
+  const ages = parId(v.ages, "Tranche d’âge");
+  unique(ages.map((a) => a.id), "Tranche d’âge");
+  const interets = lignes(v.interets);
+  unique(interets, "Centre d’intérêt");
+  const familles = lignes(v.familles);
+  unique(familles, "Famille");
+
+  if (!secteurs.length) throw new Error("Il faut au moins un secteur.");
+  return {
+    secteurs: Object.fromEntries(secteurs),
+    metiers: Object.fromEntries(metiers),
+    besoins: Object.fromEntries(besoins),
+    apports: Object.fromEntries(apports.map((a) => [a.id, a])),
+    niveaux: ancien.niveaux,
+    ages,
+    interets,
+    familles,
+  };
+}
+
+/** Valeurs retirées encore portées par des membres : [libellé, nombre]. */
+function valeursOrphelines(avant, apres) {
+  const membres = docs("membres");
+  const retires = (a, b) => a.filter((x) => !b.includes(x));
+  const metiersDe = (r) => Object.values(r.metiers).flatMap((l) => l.map(([m]) => m));
+  const verifs = [
+    ["Secteur", retires(Object.keys(avant.secteurs), Object.keys(apres.secteurs)), (m) => liste(m.secteurs)],
+    ["Métier", retires(metiersDe(avant), metiersDe(apres)), (m) => liste(m.metiers)],
+    ["Besoin", retires(Object.values(avant.besoins).map((b) => b.id), Object.values(apres.besoins).map((b) => b.id)), (m) => liste(m.besoins)],
+    ["Apport", retires(Object.keys(avant.apports), Object.keys(apres.apports)), (m) => liste(m.apports)],
+    ["Centre d’intérêt", retires(avant.interets, apres.interets), (m) => liste(m.interets)],
+    ["Tranche d’âge", retires(avant.ages.map((a) => a.id), apres.ages.map((a) => a.id)), (m) => liste(m.age)],
+  ];
+  return verifs.flatMap(([quoi, valeurs, de]) =>
+    valeurs.map((v) => [`${quoi} « ${v} »`, membres.filter((m) => de(m).includes(v)).length]).filter(([, n]) => n),
+  );
+}
+
+async function enregistrerRef(ref, message) {
+  return action(
+    () =>
+      setDoc(doc(db, "config", "referentiels"), {
+        ...refVersFirestore(ref),
+        majLe: serverTimestamp(),
+        majPar: etat.utilisateur.email,
+      }),
+    message,
+  );
+}
+
+function vueReferentiels() {
+  const ref = refCourant();
+  const t = refEnTexte(ref);
+  const perso = docs("config").some((d) => d.id === "referentiels");
+  const zoneTexte = (k, label, aide, lignesMin = 6) =>
+    champ({ k, label, type: "textarea", lignes: Math.max(lignesMin, Math.min(18, lignes(t[k]).length + 1)), aide }, t[k]);
+
+  return `
+    <div class="entete-vue">
+      <h1>Référentiels</h1>
+      <button class="btn btn-secondaire" data-renommer>Renommer une valeur…</button>
+      ${perso ? `<button class="btn btn-danger" data-reinitialiser>Revenir au fichier statique</button>` : ""}
+    </div>
+    <div class="alerte alerte-info"><p>Listes utilisées par l’annuaire, les filtres et le formulaire d’inscription.
+      ${perso ? "Version <b>modifiée dans l’administration</b>." : "Version actuelle : <b>fichier statique</b> (data/membres.json)."}
+      Une entrée par ligne ; les colonnes sont séparées par « | ». Pour corriger un libellé déjà porté par des membres,
+      utilisez <b>Renommer</b> : les profils sont mis à jour avec.</p></div>
+    <form class="carte" style="padding:4px 20px 20px" data-form-ref>
+      <div class="grille-form">
+        ${zoneTexte("secteurs", "Secteurs — nom | icône", "Icônes : " + ICONES.join(", "))}
+        ${zoneTexte("besoins", "Ce que les membres recherchent — id | libellé court | libellé", "L’id ne change plus une fois utilisé ; « autre » n’apparaît pas dans le formulaire.")}
+        ${zoneTexte("apports", "Ce que les membres apportent — id | libellé", "")}
+        ${zoneTexte("ages", "Tranches d’âge — id | libellé", "", 4)}
+        ${zoneTexte("interets", "Centres d’intérêt", "")}
+        ${zoneTexte("familles", "Familles d’église", "Liste du formulaire d’inscription.", 4)}
+        <div class="large"><p class="label">Niveaux d’expérience (fixes : ils pilotent le tri et le mentorat)</p>
+          <p class="muted">${ref.niveaux.map((n) => esc(n.label)).join(" · ")}</p></div>
+        <h3 class="large" style="margin-top:12px">Métiers par secteur — nom | mots-clés de recherche</h3>
+        ${Object.keys(ref.secteurs)
+          .map((sect, i) => zoneTexte("metiers-" + i, sect, "", 3))
+          .join("")}
+      </div>
+      <p class="aide">Un secteur ajouté reçoit sa liste de métiers après l’enregistrement.</p>
+      <button class="btn btn-primaire" type="submit" style="margin-top:14px">Enregistrer les référentiels</button>
+    </form>`;
+}
+
+function brancherReferentiels(v) {
+  const form = $("[data-form-ref]", v);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const avant = refCourant();
+    const valeurs = Object.fromEntries(new FormData(form));
+    let apres;
+    try {
+      apres = texteEnRef(valeurs, avant);
+    } catch (err) {
+      return toast(err.message, true);
+    }
+    const orphelins = valeursOrphelines(avant, apres);
+    if (
+      orphelins.length &&
+      !confirm(
+        "Ces valeurs retirées sont encore portées par des membres (elles resteront sur leur profil mais disparaîtront des filtres) :\n\n" +
+          orphelins.map(([l, n]) => `• ${l} : ${n} membre(s)`).join("\n") +
+          "\n\nPour transférer ces membres, annulez et utilisez « Renommer ». Enregistrer quand même ?",
+      )
+    )
+      return;
+    await enregistrerRef(apres, "Référentiels enregistrés.");
+  });
+  $("[data-renommer]", v).addEventListener("click", renommerValeur);
+  $("[data-reinitialiser]", v)?.addEventListener("click", async () => {
+    if (!confirm("Supprimer les référentiels de l’administration et revenir à ceux du fichier statique ?")) return;
+    await action(() => deleteDoc(doc(db, "config", "referentiels")), "Retour au fichier statique.");
+  });
+}
+
+/** Renomme une valeur dans les référentiels ET sur tous les membres et offres qui la portent. */
+function renommerValeur() {
+  const ref = refCourant();
+  const metiers = Object.values(ref.metiers).flatMap((l) => l.map(([m]) => m));
+  const TYPES = {
+    secteur: ["Secteur", Object.keys(ref.secteurs)],
+    metier: ["Métier", [...new Set(metiers)]],
+    interet: ["Centre d’intérêt", ref.interets],
+    famille: ["Famille d’église", ref.familles || FAMILLES_DEFAUT],
+  };
+  const m = ouvrirModale({
+    titre: "Renommer une valeur",
+    corps: `<div class="grille-form">
+      ${champ({ k: "type", label: "Liste", type: "select", vide: false, options: Object.entries(TYPES).map(([k, [l]]) => [k, l]) }, "secteur")}
+      <div data-ancienne>${champ({ k: "ancienne", label: "Valeur actuelle", type: "select", requis: true, options: TYPES.secteur[1] }, "")}</div>
+      ${champ({ k: "nouvelle", label: "Nouvelle valeur", requis: true, large: true })}
+    </div>
+    <p class="aide">Les profils et les offres qui portent la valeur actuelle sont mis à jour en même temps.</p>`,
+    pied: `<button type="submit" class="btn btn-primaire" value="enregistrer">Renommer</button>`,
+  });
+  $("[name=type]", m).addEventListener("change", (e) => {
+    $("[data-ancienne]", m).innerHTML = champ(
+      { k: "ancienne", label: "Valeur actuelle", type: "select", requis: true, options: TYPES[e.target.value][1] },
+      "",
+    );
+  });
+  $("[data-modale-form]", m).addEventListener("submit", async (e) => {
+    if (e.submitter?.value !== "enregistrer") return;
+    e.preventDefault();
+    const form = e.target;
+    if (!form.reportValidity()) return;
+    const { type, ancienne, nouvelle } = lireFormulaire(form, [{ k: "type" }, { k: "ancienne" }, { k: "nouvelle" }]);
+    if (ancienne === nouvelle) return fermerModale();
+    if (TYPES[type][1].includes(nouvelle)) return toast(`« ${nouvelle} » existe déjà dans cette liste.`, true);
+
+    // 1. Référentiels (l'ordre est conservé).
+    const r = structuredClone(ref);
+    const renommer = (x) => (x === ancienne ? nouvelle : x);
+    if (type === "secteur") {
+      r.secteurs = Object.fromEntries(Object.entries(r.secteurs).map(([k, val]) => [renommer(k), val]));
+      r.metiers = Object.fromEntries(Object.entries(r.metiers).map(([k, val]) => [renommer(k), val]));
+    } else if (type === "metier") {
+      for (const sect in r.metiers) r.metiers[sect] = r.metiers[sect].map(([n, mots]) => [renommer(n), mots]);
+    } else if (type === "interet") r.interets = r.interets.map(renommer);
+    else r.familles = (r.familles || FAMILLES_DEFAUT).map(renommer);
+
+    // 2. Membres et offres concernés.
+    const maj = [];
+    for (const mb of docs("membres")) {
+      const champs = {};
+      if (type === "secteur" && liste(mb.secteurs).includes(ancienne)) {
+        champs.secteurs = mb.secteurs.map(renommer);
+        champs.secteur = renommer(mb.secteur);
+      }
+      if (type === "metier" && liste(mb.metiers).includes(ancienne)) {
+        champs.metiers = mb.metiers.map(renommer);
+        champs.metier = renommer(mb.metier);
+      }
+      if (type === "interet" && liste(mb.interets).includes(ancienne)) champs.interets = mb.interets.map(renommer);
+      if (type === "famille" && mb.famille === ancienne) champs.famille = nouvelle;
+      if (Object.keys(champs).length) maj.push(["membres", mb.id, champs]);
+    }
+    for (const o of docs("offres")) {
+      if (type === "secteur" && o.secteur === ancienne) maj.push(["offres", o.id, { secteur: nouvelle }]);
+      if (type === "metier" && o.metier === ancienne) maj.push(["offres", o.id, { metier: nouvelle }]);
+    }
+    if (!confirm(`Renommer « ${ancienne} » en « ${nouvelle} » ? ${maj.length} profil(s)/offre(s) seront mis à jour.`)) return;
+
+    e.submitter.disabled = true;
+    const ok = await action(async () => {
+      for (let i = 0; i < maj.length; i += 400) {
+        const lot = writeBatch(db);
+        maj.slice(i, i + 400).forEach(([col, id, champs]) => lot.update(doc(db, col, id), { ...champs, majLe: serverTimestamp() }));
+        await lot.commit();
+      }
+      await setDoc(doc(db, "config", "referentiels"), {
+        ...refVersFirestore(r),
+        majLe: serverTimestamp(),
+        majPar: etat.utilisateur.email,
+      });
+    }, `« ${ancienne} » renommé en « ${nouvelle} » (${maj.length} mise(s) à jour).`);
+    e.submitter.disabled = false;
+    if (ok) fermerModale();
+  });
+}
+
+/* ---------------------------------------------------------------- *
+ * 8 ter. Paramètres et journal d'envoi
  * ---------------------------------------------------------------- */
 const CHAMPS_REGLAGES = [
   {
@@ -1229,6 +1522,7 @@ const VUES = {
   offres: [vueOffres, brancherOffres],
   admins: [vueAdmins, brancherAdmins],
   parametres: [vueParametres, brancherParametres],
+  referentiels: [vueReferentiels, brancherReferentiels],
   ...Object.fromEntries(Object.keys(FILES).map((nom) => [nom, [() => vueFile(nom), (v) => brancherFile(nom, v)]])),
 };
 
