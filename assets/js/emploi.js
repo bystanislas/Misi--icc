@@ -47,12 +47,15 @@ function carteOffre(o) {
 }
 
 async function chargerOffres() {
-  let offres = [];
-  try {
-    const r = await fetch("data/offres.json", { cache: "no-cache" });
-    if (r.ok) offres = (await r.json()).offres || [];
-  } catch {
-    /* fichier absent : la section reste sur son état vide */
+  // Firestore (offres publiées depuis l'administration) d'abord, fichier statique en repli.
+  let offres = (typeof FB !== "undefined" && (await FB.chargerOffres())) || [];
+  if (!offres.length) {
+    try {
+      const r = await fetch("data/offres.json", { cache: "no-cache" });
+      if (r.ok) offres = (await r.json()).offres || [];
+    } catch {
+      /* fichier absent : la section reste sur son état vide */
+    }
   }
 
   // On masque les offres expirées.
@@ -191,11 +194,23 @@ function brancherFormulaire(form, zoneActions, zoneOk, sujet, resume) {
     }
 
     try {
-      const corps = new URLSearchParams(d).toString();
-      const entete = { "Content-Type": "application/x-www-form-urlencoded" };
-      let rep = await fetch("/api/inscription", { method: "POST", headers: entete, body: corps }).catch(() => null);
-      if (!rep || !rep.ok) rep = await fetch("/", { method: "POST", headers: entete, body: corps }).catch(() => null);
-      if (!rep || !rep.ok) throw new Error("aucun canal");
+      let enregistre = false;
+
+      // 1. Firestore — traité ensuite depuis l'administration.
+      if (sujet.collection && typeof FB !== "undefined" && firebaseActif()) {
+        const objet = {};
+        for (const [k, v] of d.entries()) if (k !== "bot-field" && k !== "form-name") objet[k] = v;
+        enregistre = await FB.enregistrerEmploi(sujet.collection, objet).catch(() => false);
+      }
+
+      // 2. Sinon : fonction Vercel, puis Netlify Forms.
+      if (!enregistre) {
+        const corps = new URLSearchParams(d).toString();
+        const entete = { "Content-Type": "application/x-www-form-urlencoded" };
+        let rep = await fetch("/api/inscription", { method: "POST", headers: entete, body: corps }).catch(() => null);
+        if (!rep || !rep.ok) rep = await fetch("/", { method: "POST", headers: entete, body: corps }).catch(() => null);
+        if (!rep || !rep.ok) throw new Error("aucun canal");
+      }
 
       form.reset();
       actions.innerHTML = `<a class="btn-secondary w-full" href="#candidats">Revenir aux candidats</a>`;
@@ -321,6 +336,7 @@ Data.charger().then(() => {
     {
       bouton: "Envoyer ma candidature",
       objet: "Candidature spontanée — Annuaire MISI",
+      collection: "candidatures",
       confirmation:
         "Candidature transmise. Le secrétariat MISI vous recontacte dès qu’un besoin correspond à votre profil.",
     },
@@ -339,6 +355,7 @@ Data.charger().then(() => {
     {
       bouton: "Soumettre l’offre",
       objet: "Nouvelle offre d’emploi — Annuaire MISI",
+      collection: "offres_proposees",
       confirmation: "Offre transmise. Le secrétariat MISI la valide puis la publie sur cette page.",
     },
     (d) =>

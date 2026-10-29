@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Administration — Annuaire MISI</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#366a82" />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/admin/admin.css" />
+  </head>
+  <body>
+    <!-- ======================= CONNEXION ======================= -->
+    <section data-ecran="connexion" class="ecran-connexion" hidden>
+      <form class="carte-connexion" data-form-connexion>
+        <img src="/assets/logo-misi-marque.png" alt="MISI" class="logo" width="429" height="161" />
+        <h1>Administration</h1>
+        <p class="muted">Annuaire des compétences — ICC Riviera 2</p>
+        <label class="label" for="c-email">E-mail</label>
+        <input class="champ" id="c-email" name="email" type="email" autocomplete="username" required />
+        <label class="label" for="c-mdp">Mot de passe</label>
+        <input class="champ" id="c-mdp" name="mdp" type="password" autocomplete="current-password" required />
+        <p class="erreur" data-erreur-connexion hidden></p>
+        <button class="btn btn-primaire w-full" type="submit">Se connecter</button>
+        <button class="btn btn-lien w-full" type="button" data-mdp-oublie>Mot de passe oublié</button>
+      </form>
+    </section>
+
+    <!-- ======================= ACCÈS REFUSÉ ======================= -->
+    <section data-ecran="refuse" class="ecran-connexion" hidden>
+      <div class="carte-connexion">
+        <h1>Accès non autorisé</h1>
+        <p>Ce compte est connecté mais n’est pas administrateur.</p>
+        <p class="muted">Pour l’autoriser, créez dans la console Firebase le document
+          <code>admins/<span data-uid></span></code> (collection <code>admins</code>, ID = cet UID).</p>
+        <button class="btn btn-secondaire w-full" type="button" data-copier-uid>Copier l’UID</button>
+        <button class="btn btn-lien w-full" type="button" data-deconnexion>Se déconnecter</button>
+      </div>
+    </section>
+
+    <!-- ======================= APPLICATION ======================= -->
+    <div data-ecran="app" class="app" hidden>
+      <aside class="barre">
+        <a href="/" class="marque" title="Voir le site public">
+          <img src="/assets/logo-misi-marque.png" alt="MISI" width="429" height="161" />
+          <span>Admin</span>
+        </a>
+        <nav data-nav>
+          <a href="#tableau">Tableau de bord</a>
+          <a href="#membres">Membres</a>
+          <a href="#inscriptions">Inscriptions <b data-compteur="inscriptions"></b></a>
+          <a href="#accompagnements">Accompagnements <b data-compteur="accompagnements"></b></a>
+          <a href="#demandes">Demandes Apex IA <b data-compteur="demandes"></b></a>
+          <a href="#candidatures">Candidatures <b data-compteur="candidatures"></b></a>
+          <a href="#offres">Offres d’emploi</a>
+          <a href="#offres_proposees">Offres proposées <b data-compteur="offres_proposees"></b></a>
+          <a href="#admins">Administrateurs</a>
+        </nav>
+        <div class="pied-barre">
+          <span class="muted" data-utilisateur></span>
+          <button class="btn btn-lien" type="button" data-deconnexion>Se déconnecter</button>
+        </div>
+      </aside>
+      <main class="contenu" data-vue aria-live="polite"></main>
+    </div>
+
+    <div class="chargement" data-chargement>Chargement…</div>
+    <dialog class="modale" data-modale></dialog>
+    <div class="toast" data-toast hidden></div>
+
+    <script src="/assets/js/firebase-config.js"></script>
+    <script type="module" src="/admin/admin.js"></script>
+  </body>
+</html>

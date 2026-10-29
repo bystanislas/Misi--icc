@@ -247,6 +247,13 @@ Data.charger().then(() => {
 
   if (profilInitial) ouvrirProfil(profilInitial);
 
+  // Données Firestore arrivées après le premier affichage : on ré-affiche.
+  addEventListener("misi:membres", () => {
+    Data.membres.forEach((m) => (m._idx = indexer(m)));
+    rendreFacettes();
+    rendre();
+  });
+
   const maj = $("[data-maj]");
   if (maj)
     maj.textContent =

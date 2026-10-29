@@ -97,6 +97,43 @@ const FB = {
     return true;
   },
 
+  /**
+   * Offres d'emploi publiées depuis l'administration.
+   * Renvoie null si Firestore est indisponible ou vide — la page retombe
+   * alors sur data/offres.json. Pas de coupe-circuit ici : il est posé par
+   * chargerMembres quand la collection membres est vide, ce qui ne dit rien
+   * des offres.
+   */
+  async chargerOffres() {
+    if (!firebaseActif()) return null;
+    try {
+      const lecture = (async () => {
+        const { db, collection, getDocs, query, where } = await this._charger();
+        const snap = await getDocs(query(collection(db, "offres"), where("publie", "==", true)));
+        return snap.empty ? null : snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      })();
+      const limite = new Promise((_, rejeter) =>
+        setTimeout(() => rejeter(new Error("délai dépassé")), 2500),
+      );
+      return await Promise.race([lecture, limite]);
+    } catch (e) {
+      console.warn("Offres Firestore indisponibles, repli sur le fichier statique.", e.message);
+      return null;
+    }
+  },
+
+  /** Candidature spontanée ou offre proposée (page « Emploi »). */
+  async enregistrerEmploi(nomCollection, donnees) {
+    if (!firebaseActif()) return false;
+    const { db, collection, addDoc, serverTimestamp } = await this._charger();
+    await addDoc(collection(db, nomCollection), {
+      ...donnees,
+      statut: "a_traiter",
+      creeLe: serverTimestamp(),
+    });
+    return true;
+  },
+
   /** Demande d'accompagnement de projet (page « Projets »). */
   async enregistrerAccompagnement(donnees) {
     if (!firebaseActif()) return false;

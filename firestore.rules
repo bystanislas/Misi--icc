@@ -1,0 +1,70 @@
+rules_version = '2';
+
+// Règles Firestore — Annuaire MISI (projet misi-icc)
+//
+// Public  : lit les membres et offres publiés ; dépose inscriptions,
+//           demandes, accompagnements, candidatures et offres proposées
+//           sans jamais pouvoir les relire.
+// Admins  : un document admins/{uid} donne tous les droits à ce compte.
+//           Le premier admin se crée à la main dans la console Firebase
+//           (voir README, section « Administration »).
+//
+// Déploiement : npx firebase-tools deploy --only firestore:rules
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function estAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // Dépôt public : horodatage serveur obligatoire, taille bornée,
+    // statut imposé. Aucune lecture, modification ni suppression.
+    function depotValide(statut) {
+      return request.resource.data.creeLe == request.time
+        && request.resource.data.keys().size() <= 40
+        && (statut == null || request.resource.data.statut == statut);
+    }
+
+    match /membres/{id} {
+      allow read: if resource.data.publie == true || estAdmin();
+      allow write: if estAdmin();
+    }
+
+    match /offres/{id} {
+      allow read: if resource.data.publie == true || estAdmin();
+      allow write: if estAdmin();
+    }
+
+    match /inscriptions/{id} {
+      allow create: if depotValide("a_valider") || estAdmin();
+      allow read, update, delete: if estAdmin();
+    }
+
+    match /accompagnements/{id} {
+      allow create: if depotValide("a_traiter") || estAdmin();
+      allow read, update, delete: if estAdmin();
+    }
+
+    match /candidatures/{id} {
+      allow create: if depotValide("a_traiter") || estAdmin();
+      allow read, update, delete: if estAdmin();
+    }
+
+    match /offres_proposees/{id} {
+      allow create: if depotValide("a_traiter") || estAdmin();
+      allow read, update, delete: if estAdmin();
+    }
+
+    match /demandes/{id} {
+      allow create: if depotValide(null) || estAdmin();
+      allow read, update, delete: if estAdmin();
+    }
+
+    match /admins/{uid} {
+      allow read: if (request.auth != null && request.auth.uid == uid) || estAdmin();
+      allow write: if estAdmin();
+    }
+  }
+}

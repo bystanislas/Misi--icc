@@ -107,6 +107,15 @@ const Data = {
           this.genereLe = d.genereLe;
           this.membres = d.membres;
           this.source = "fichier";
+          // Dernière copie Firestore connue : affichée tout de suite, sans
+          // attendre le SDK. Les modifications faites dans l'administration
+          // apparaissent ainsi dès la visite suivante sur toutes les pages.
+          const cache = this._lireCache();
+          if (cache) {
+            this.membres = cache.membres;
+            this.genereLe = cache.le;
+            this.source = "firestore";
+          }
           this._enrichirDepuisFirestore();
           return d;
         });
@@ -124,14 +133,34 @@ const Data = {
     FB.chargerMembres()
       .then((distants) => {
         if (!distants?.length) return;
+        const le = new Date().toISOString();
+        const identique = JSON.stringify(distants) === JSON.stringify(this.membres);
+        this._ecrireCache({ le, membres: distants });
+        if (identique) return;
         this.membres = distants;
         this.source = "firestore";
-        this.genereLe = new Date().toISOString();
+        this.genereLe = le;
         dispatchEvent(new CustomEvent("misi:membres", { detail: { source: "firestore" } }));
       })
       .catch(() => {
         /* déjà journalisé par FB.chargerMembres */
       });
+  },
+
+  _lireCache() {
+    try {
+      const c = JSON.parse(localStorage.getItem("misi-membres-firestore") || "null");
+      return c?.membres?.length ? c : null;
+    } catch {
+      return null;
+    }
+  },
+  _ecrireCache(c) {
+    try {
+      localStorage.setItem("misi-membres-firestore", JSON.stringify(c));
+    } catch {
+      /* stockage plein ou bloqué : sans conséquence */
+    }
   },
 
   parId(id) {
