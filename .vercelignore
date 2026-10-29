@@ -1,0 +1,5 @@
+# Fichiers du dépôt inutiles en ligne (le site est servi depuis la racine).
+README.md
+firestore.rules
+firebase.json
+.firebaserc

@@ -1,0 +1,12 @@
+{
+  "name": "annuaire-misi",
+  "private": true,
+  "type": "module",
+  "description": "Annuaire des compétences ICC Riviera 2 — site statique, administration et fonctions Vercel (api/).",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.134.0"
+  }
+}
