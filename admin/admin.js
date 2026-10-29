@@ -12,6 +12,9 @@
  *   demandes, candidatures,
  *   offres_proposees                     → suivi, statut, notes, réponse
  *   admins                               → gestion des accès
+ *   config/admin, mail                   → paramètres, envoi direct des
+ *                                          e-mails (extension Firebase
+ *                                          « Trigger Email »)
  * ================================================================== */
 
 import { initializeApp, deleteApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
@@ -129,6 +132,8 @@ const COLLECTIONS = [
   "candidatures",
   "offres_proposees",
   "admins",
+  "mail",
+  "config",
 ];
 
 function synchroniser() {
@@ -153,6 +158,7 @@ function synchroniser() {
 }
 
 const docs = (nom) => etat.donnees[nom] || [];
+const reglages = () => docs("config").find((d) => d.id === "admin") || {};
 
 async function chargerReferentiels() {
   try {
@@ -783,7 +789,7 @@ function remplirModele(texte, d) {
       .replaceAll("{titre}", d.titre || "")
       .replaceAll("{poste}", d.poste ? ` pour le poste « ${d.poste} »` : "")
       .replaceAll("{site}", URL_SITE)
-      .replace("Bonjour ,", "Bonjour,") + SIGNATURE
+      .replace("Bonjour ,", "Bonjour,") + (reglages().signature ? "\n\n" + reglages().signature : SIGNATURE)
   );
 }
 
@@ -817,7 +823,10 @@ function ouvrirDemande(nom, d) {
       ${
         reponses.length
           ? `<ul class="historique">${reponses
-              .map((r) => `<li><small>${esc(dateLongue(r.le))} · ${esc(r.canal)} · ${esc(r.par || "")}</small>${esc(r.texte)}</li>`)
+              .map(
+                (r) =>
+                  `<li><small>${esc(dateLongue(r.le))} · ${esc(r.canal)} · ${esc(r.par || "")} ${r.mailId ? etatEnvoi(r.mailId) : ""}</small>${esc(r.texte)}</li>`,
+              )
               .join("")}</ul>`
           : `<p class="muted">Aucune réponse pour l’instant.</p>`
       }`,
@@ -851,9 +860,26 @@ function ouvrirDemande(nom, d) {
   });
 }
 
+const ETATS_ENVOI = {
+  SUCCESS: ["Délivré", "vert"],
+  ERROR: ["Échec d’envoi", "rouge"],
+  PROCESSING: ["Envoi en cours", "bleu"],
+  RETRY: ["Nouvel essai", "orange"],
+};
+
+/** État d'un e-mail confié à l'extension (champ delivery qu'elle renseigne). */
+function etatEnvoi(mailId) {
+  const mail = docs("mail").find((x) => x.id === mailId);
+  if (!mail) return `<span class="pastille p-gris">Journal supprimé</span>`;
+  const [lib, ton] = ETATS_ENVOI[mail.delivery?.state] || ["En attente d’envoi", "orange"];
+  const erreur = mail.delivery?.state === "ERROR" && mail.delivery.error ? ` title="${esc(mail.delivery.error)}"` : "";
+  return `<span class="pastille p-${ton}"${erreur}>${esc(lib)}</span>`;
+}
+
 function repondre(nom, d) {
   const cfg = FILES[nom];
   const c = contactDe(d);
+  const direct = Boolean(reglages().envoiDirect && c.email);
   const modeles = [...cfg.modeles, ["Message libre", "Bonjour {prenom},\n\n"]];
   const statuts = Object.entries(cfg.statuts).map(([k, [l]]) => [k, l]);
   const suivant = { a_valider: "a_valider", a_traiter: nom === "accompagnements" ? "en_cours" : "repondu" }[statutDe(nom, d)] || statutDe(nom, d);
@@ -868,11 +894,16 @@ function repondre(nom, d) {
         ${champ({ k: "objet", label: "Objet (e-mail)", large: true }, cfg.objet)}
         ${champ({ k: "texte", label: "Message", type: "textarea", lignes: 10 }, remplirModele(modeles[0][1], d))}
       </div>
-      <p class="aide">L’envoi ouvre votre messagerie ou WhatsApp avec le message prêt ; la réponse est consignée dans l’historique.</p>`,
+      <p class="aide">${
+        direct
+          ? "« Envoyer l’e-mail » part directement depuis le serveur ; son état de délivrance s’affiche dans l’historique."
+          : "L’envoi ouvre votre messagerie ou WhatsApp avec le message prêt"
+      } ; la réponse est consignée dans l’historique.</p>`,
     pied: `
       <button type="button" class="btn btn-secondaire gauche" data-copier>Copier</button>
       ${c.telephone ? `<button type="button" class="btn btn-secondaire" data-canal="whatsapp">Envoyer par WhatsApp</button>` : ""}
-      ${c.email ? `<button type="button" class="btn btn-primaire" data-canal="email">Envoyer par e-mail</button>` : ""}`,
+      ${c.email ? `<button type="button" class="btn ${direct ? "btn-secondaire" : "btn-primaire"}" data-canal="email">${direct ? "Ouvrir dans ma messagerie" : "Envoyer par e-mail"}</button>` : ""}
+      ${direct ? `<button type="button" class="btn btn-primaire" data-canal="direct">Envoyer l’e-mail</button>` : ""}`,
   });
 
   const form = $("[data-modale-form]", m);
@@ -888,20 +919,40 @@ function repondre(nom, d) {
       const { objet, texte, statut } = lireFormulaire(form, [{ k: "objet" }, { k: "texte" }, { k: "statut" }]);
       if (!texte) return toast("Le message est vide.", true);
       const canal = b.dataset.canal;
-      const lien =
-        canal === "email"
-          ? `mailto:${encodeURIComponent(c.email)}?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(texte)}`
-          : `https://wa.me/${numeroWhatsApp(c.telephone)}?text=${encodeURIComponent(texte)}`;
-      window.open(lien, "_blank", "noopener");
-      const ok = await action(
-        () =>
-          updateDoc(doc(db, nom, d.id), {
-            statut,
-            majLe: serverTimestamp(),
-            reponses: arrayUnion({ le: Timestamp.now(), canal, objet: canal === "email" ? objet : "", texte, par: etat.utilisateur.email }),
-          }),
-        "Réponse consignée.",
-      );
+      const reponse = { le: Timestamp.now(), canal, objet: canal === "whatsapp" ? "" : objet, texte, par: etat.utilisateur.email };
+      let ok;
+
+      if (canal === "direct") {
+        // Le document mail est envoyé par l'extension, qui y inscrit ensuite delivery.state.
+        b.disabled = true;
+        const mail = doc(collection(db, "mail"));
+        const lot = writeBatch(db);
+        lot.set(mail, {
+          to: [c.email],
+          ...(reglages().replyTo ? { replyTo: reglages().replyTo } : {}),
+          message: { subject: objet, text: texte },
+          source: { collection: nom, id: d.id },
+          par: etat.utilisateur.email,
+          creeLe: serverTimestamp(),
+        });
+        lot.update(doc(db, nom, d.id), {
+          statut,
+          majLe: serverTimestamp(),
+          reponses: arrayUnion({ ...reponse, mailId: mail.id }),
+        });
+        ok = await action(() => lot.commit(), "E-mail confié à l’envoi.");
+        b.disabled = false;
+      } else {
+        const lien =
+          canal === "email"
+            ? `mailto:${encodeURIComponent(c.email)}?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(texte)}`
+            : `https://wa.me/${numeroWhatsApp(c.telephone)}?text=${encodeURIComponent(texte)}`;
+        window.open(lien, "_blank", "noopener");
+        ok = await action(
+          () => updateDoc(doc(db, nom, d.id), { statut, majLe: serverTimestamp(), reponses: arrayUnion(reponse) }),
+          "Réponse consignée.",
+        );
+      }
       if (ok) fermerModale();
     }),
   );
@@ -1035,6 +1086,85 @@ function brancherAdmins(v) {
 }
 
 /* ---------------------------------------------------------------- *
+ * 8 bis. Paramètres et journal d'envoi
+ * ---------------------------------------------------------------- */
+const CHAMPS_REGLAGES = [
+  {
+    k: "envoiDirect",
+    label: "Envoyer les e-mails directement depuis l’administration",
+    type: "case",
+    aide: "Nécessite l’extension Firebase « Trigger Email from Firestore » branchée sur la collection mail (voir README).",
+  },
+  {
+    k: "replyTo",
+    label: "Adresse de réponse (Reply-To)",
+    type: "email",
+    aide: "Facultatif : l’adresse où arrivent les réponses des destinataires.",
+  },
+  {
+    k: "signature",
+    label: "Signature des messages",
+    type: "textarea",
+    lignes: 3,
+    aide: "Ajoutée à la fin de chaque modèle. Vide : signature par défaut du secrétariat MISI.",
+  },
+];
+
+function vueParametres() {
+  const r = reglages();
+  const mails = docs("mail").slice(0, 30);
+  // Un e-mail vieux de plus de 10 min jamais pris en charge : extension absente ou mal configurée.
+  const bloque = docs("mail").some((m) => !m.delivery && enDate(m.creeLe) && Date.now() - enDate(m.creeLe) > 600e3);
+
+  return `
+    <div class="entete-vue"><h1>Paramètres</h1></div>
+    ${
+      bloque
+        ? `<div class="alerte alerte-orange"><p>Des e-mails attendent depuis plus de 10 minutes sans avoir été pris en charge :
+           l’extension « Trigger Email » ne semble pas installée, ou ne surveille pas la collection <code>mail</code>.</p></div>`
+        : ""
+    }
+    <form class="carte" style="padding:4px 20px 20px;margin-bottom:20px" data-form-reglages>
+      <div class="grille-form">${CHAMPS_REGLAGES.map((d) => champ(d, r[d.k])).join("")}</div>
+      <button class="btn btn-primaire" type="submit" style="margin-top:14px">Enregistrer les paramètres</button>
+    </form>
+    <h2 style="margin-bottom:10px">Journal d’envoi des e-mails</h2>
+    <div class="carte table-wrap">
+      ${
+        mails.length
+          ? `<table><thead><tr><th>Destinataire</th><th class="col-option">Objet</th><th>État</th><th class="col-option">Envoyé</th></tr></thead>
+        <tbody>${mails
+          .map(
+            (m) => `<tr>
+            <td>${esc(liste(m.to).join(", "))}<span class="sous">${esc(m.par || "")}</span></td>
+            <td class="col-option">${esc(m.message?.subject || "")}</td>
+            <td>${etatEnvoi(m.id)}${m.delivery?.error ? `<span class="sous">${esc(m.delivery.error)}</span>` : ""}</td>
+            <td class="col-option">${esc(dateLongue(m.creeLe))}</td></tr>`,
+          )
+          .join("")}</tbody></table>`
+          : `<p class="vide">Aucun e-mail envoyé directement pour l’instant.</p>`
+      }
+    </div>`;
+}
+
+function brancherParametres(v) {
+  const form = $("[data-form-reglages]", v);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    await action(
+      () =>
+        setDoc(
+          doc(db, "config", "admin"),
+          { ...lireFormulaire(form, CHAMPS_REGLAGES), majLe: serverTimestamp(), majPar: etat.utilisateur.email },
+          { merge: true },
+        ),
+      "Paramètres enregistrés.",
+    );
+  });
+}
+
+/* ---------------------------------------------------------------- *
  * 9. Tableau de bord
  * ---------------------------------------------------------------- */
 function vueTableau() {
@@ -1098,6 +1228,7 @@ const VUES = {
   membres: [vueMembres, brancherMembres],
   offres: [vueOffres, brancherOffres],
   admins: [vueAdmins, brancherAdmins],
+  parametres: [vueParametres, brancherParametres],
   ...Object.fromEntries(Object.keys(FILES).map((nom) => [nom, [() => vueFile(nom), (v) => brancherFile(nom, v)]])),
 };
 

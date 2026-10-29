@@ -62,6 +62,17 @@ service cloud.firestore {
       allow read, update, delete: if estAdmin();
     }
 
+    // Paramètres de l'administration.
+    match /config/{id} {
+      allow read, write: if estAdmin();
+    }
+
+    // File d'envoi de l'extension « Trigger Email » : elle écrit avec le
+    // SDK Admin (hors règles) ; seuls les admins y déposent et y lisent.
+    match /mail/{id} {
+      allow read, write: if estAdmin();
+    }
+
     match /admins/{uid} {
       allow read: if (request.auth != null && request.auth.uid == uid) || estAdmin();
       allow write: if estAdmin();

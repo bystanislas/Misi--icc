@@ -29,6 +29,8 @@ Site statique (HTML + JS vanilla + Tailwind compilé), données dans **Firebase 
 | `candidatures` | Page *Emploi* (candidature spontanée) | dépôt seul | idem |
 | `offres_proposees` | Page *Emploi* (proposer une offre) | dépôt seul | idem + « Publier comme offre » |
 | `admins` | Admin / console | — | gestion des accès |
+| `config` | Admin (écran Paramètres) | — | tout |
+| `mail` | Admin (envoi direct) → extension *Trigger Email* | — | dépôt et suivi de délivrance |
 
 Les coordonnées (e-mail, téléphone) restent dans les dépôts : elles ne sont **jamais** copiées dans `membres`, qui est lisible publiquement.
 
@@ -54,7 +56,22 @@ Les administrateurs suivants s’ajoutent depuis l’écran **Administrateurs** 
 - **Inscriptions** : fiche complète, *Valider → créer le profil* (pré-rempli, inscription liée), refuser, notes internes.
 - **Accompagnements, demandes Apex IA, candidatures, offres proposées** : statut, notes, suppression.
 - **Répondre** : modèles de message personnalisés, envoi par e-mail (`mailto:`) ou WhatsApp (`wa.me`, indicatif +225 par défaut) ; chaque réponse est consignée (date, canal, auteur) et le statut avance.
+- **Envoi direct des e-mails** (facultatif) : le message part du serveur sans ouvrir de messagerie, et son état (*en attente*, *délivré*, *échec*) s’affiche dans l’historique et dans le journal de l’écran **Paramètres**. Voir ci-dessous.
+- **Paramètres** : activation de l’envoi direct, adresse de réponse (Reply-To), signature des messages.
 - **Offres d’emploi** : création, édition, date d’expiration, brouillon/en ligne. La page *Emploi* les lit dans Firestore.
+
+## Envoi direct des e-mails (facultatif)
+
+Sans code serveur : l’admin dépose le message dans la collection `mail`, l’extension officielle Firebase l’envoie en SMTP et y inscrit le résultat (`delivery.state`).
+
+1. Passer le projet au forfait **Blaze** (paiement à l’usage ; le volume d’un secrétariat reste dans la gratuité des fonctions).
+2. Console Firebase › *Extensions* › installer **Trigger Email from Firestore** (`firebase/firestore-send-email`) :
+   - *Email documents collection* : `mail`
+   - *SMTP connection URI* : par ex. Resend `smtps://resend:<CLÉ_API>@smtp.resend.com:465`, ou Gmail `smtps://<adresse>:<mot-de-passe-application>@smtp.gmail.com:465`
+   - *Default FROM address* : l’expéditeur, par ex. `Secrétariat MISI <secretariat@votre-domaine>` (domaine vérifié chez le fournisseur)
+3. Dans l’admin › **Paramètres** : cocher « Envoyer les e-mails directement », renseigner le Reply-To, enregistrer.
+
+Le bouton **Envoyer l’e-mail** apparaît alors dans « Répondre » ; « Ouvrir dans ma messagerie » et WhatsApp restent disponibles. Si l’extension manque ou est mal configurée, l’écran Paramètres le signale (e-mails non pris en charge après 10 minutes).
 
 ## Développement local
 
