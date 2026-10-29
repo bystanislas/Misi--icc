@@ -1,0 +1,39 @@
+{
+  "name": "Annuaire des compétences — ICC Riviera 2",
+  "short_name": "Annuaire MISI",
+  "description": "Découvrez, connectez et valorisez les talents de la communauté ICC Riviera 2.",
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#366a82",
+  "categories": ["social", "business", "productivity"],
+  "icons": [
+    { "src": "assets/icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Trouver une compétence",
+      "short_name": "Annuaire",
+      "url": "annuaire.html",
+      "icons": [{ "src": "assets/icone-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Opportunités",
+      "short_name": "Opportunités",
+      "url": "opportunites.html",
+      "icons": [{ "src": "assets/icone-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mise en relation",
+      "short_name": "Matching",
+      "url": "connexion.html",
+      "icons": [{ "src": "assets/icone-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

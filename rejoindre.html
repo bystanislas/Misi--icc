@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inscrire mon profil — ICC Riviera 2 · MISI</title>
+    <meta name="description" content="Rendez vos compétences visibles dans l’annuaire du MISI — ICC Riviera 2. Vos coordonnées restent privées." />
+    <meta name="theme-color" content="#366a82" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Annuaire MISI" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <header data-entete class="sticky top-0 z-40 border-b border-ink-200 bg-white/85 backdrop-blur-md transition-shadow">
+      <div class="wrap flex h-16 items-center gap-4">
+        <a href="index.html" class="flex shrink-0 items-center gap-3" aria-label="Accueil — Annuaire des compétences MISI">
+          <img src="assets/logo-misi-marque.png" width="429" height="161" class="h-9 w-auto"
+               alt="MISI — Ministère de l’Innovation et des Sphères d’Influence" />
+          <span class="hidden border-l border-ink-200 pl-3 leading-tight sm:block">
+            <span class="block font-display text-[14.5px] font-bold text-ink-900">Annuaire des compétences</span>
+            <span class="block text-[11px] text-ink-500">ICC Riviera 2</span>
+          </span>
+        </a>
+        <nav class="ml-auto hidden items-center gap-0.5 lg:flex" aria-label="Navigation principale">
+          <a class="btn-ghost" href="index.html">Accueil</a>
+          <a class="btn-ghost" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost" href="emploi.html">Emploi</a>
+          <a class="btn-ghost" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost" href="opportunites.html">Opportunités</a>
+          <a class="btn-ghost" href="connexion.html">Mise en relation</a>
+        </nav>
+        <button data-menu-bouton class="btn-ghost ml-auto p-2 lg:hidden" aria-expanded="false" aria-label="Ouvrir le menu">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+      </div>
+      <div data-menu class="hidden border-t border-ink-200 bg-white lg:hidden">
+        <nav class="wrap flex flex-col py-3">
+          <a class="btn-ghost justify-start" href="index.html">Accueil</a>
+          <a class="btn-ghost justify-start" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost justify-start" href="emploi.html">Emploi</a>
+          <a class="btn-ghost justify-start" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost justify-start" href="opportunites.html">Opportunités</a>
+          <a class="btn-ghost justify-start" href="connexion.html">Mise en relation</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="border-b border-ink-200 bg-gradient-to-b from-brand-50 to-white">
+        <div class="wrap py-10 sm:py-12">
+          <p class="eyebrow">Rejoindre l’annuaire</p>
+          <h1 class="mt-3 text-3xl font-bold sm:text-[40px]">Inscrire mon profil</h1>
+          <p class="mt-3 max-w-2xl text-[15.5px] leading-relaxed text-ink-600">
+            Cinq minutes pour rendre votre compétence visible — et pour dire ce que vous
+            cherchez. Vos coordonnées ne seront jamais publiées&nbsp;: elles servent uniquement
+            au secrétariat MISI pour vous joindre.
+          </p>
+          <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-ink-500">
+            <span class="flex items-center gap-1.5"><span class="text-emerald-600" data-picto="check" data-taille="h-4 w-4"></span> Enregistrement direct sur le site</span>
+            <span class="flex items-center gap-1.5"><span class="text-emerald-600" data-picto="check" data-taille="h-4 w-4"></span> Coordonnées non publiées</span>
+            <span class="flex items-center gap-1.5"><span class="text-emerald-600" data-picto="check" data-taille="h-4 w-4"></span> Modifiable à tout moment</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="wrap grid gap-10 py-12 lg:grid-cols-[1fr_320px] lg:gap-14">
+        <form class="card p-6 sm:p-8" data-form-inscription
+              name="inscription" method="POST"
+              data-netlify="true" netlify-honeypot="bot-field" action="merci.html">
+          <input type="hidden" name="form-name" value="inscription" />
+          <p class="hidden"><label>Ne pas remplir&nbsp;: <input name="bot-field" /></label></p>
+
+          <!-- Étapes -->
+          <ol class="mb-8 flex flex-wrap gap-x-6 gap-y-2 text-[12.5px] font-semibold text-ink-400">
+            <li class="text-brand-600">1. Vous</li>
+            <li>2. Église</li>
+            <li>3. Métier</li>
+            <li>4. Réseau</li>
+          </ol>
+
+          <!-- ============ 1. IDENTITÉ ============ -->
+          <h2 class="font-display text-[17px] font-bold">1. Vous</h2>
+          <div class="mt-4 grid gap-5 sm:grid-cols-2">
+            <div class="sm:col-span-2">
+              <label class="label" for="i-nom">Nom et prénoms <span class="text-brique-600">*</span></label>
+              <input class="field" id="i-nom" name="nom" required autocomplete="name" />
+            </div>
+            <div>
+              <label class="label" for="i-email">E-mail <span class="text-brique-600">*</span></label>
+              <input class="field" id="i-email" name="email" type="email" required autocomplete="email" />
+            </div>
+            <div>
+              <label class="label" for="i-tel">Téléphone <span class="text-brique-600">*</span></label>
+              <input class="field" id="i-tel" name="telephone" type="tel" required autocomplete="tel"
+                     placeholder="+225 07 00 00 00 00" />
+            </div>
+            <div>
+              <label class="label" for="i-ville">Ville</label>
+              <select class="field" id="i-ville" name="ville">
+                <option value="">— Choisir —</option>
+<!--DEBUT:villes-->
+              <option value="Abidjan">Abidjan</option>
+              <option value="Grand-Bassam">Grand-Bassam</option>
+              <option value="Dabou">Dabou</option>
+              <option value="Yamoussoukro">Yamoussoukro</option>
+              <option value="Bouaké">Bouaké</option>
+              <option value="San-Pédro">San-Pédro</option>
+              <option value="Côte d’Ivoire">Côte d’Ivoire</option>
+            <!--FIN:villes-->
+              </select>
+            </div>
+            <div>
+              <label class="label" for="i-commune">Commune</label>
+              <select class="field" id="i-commune" name="commune">
+                <option value="">— Choisir —</option>
+<!--DEBUT:communes-->
+              <option value="Cocody" data-ville="Abidjan">Cocody</option>
+              <option value="Yopougon" data-ville="Abidjan">Yopougon</option>
+              <option value="Koumassi" data-ville="Abidjan">Koumassi</option>
+              <option value="Marcory" data-ville="Abidjan">Marcory</option>
+              <option value="Treichville" data-ville="Abidjan">Treichville</option>
+              <option value="Adjamé" data-ville="Abidjan">Adjamé</option>
+              <option value="Abobo" data-ville="Abidjan">Abobo</option>
+              <option value="Anyama" data-ville="Abidjan">Anyama</option>
+              <option value="Port-Bouët" data-ville="Abidjan">Port-Bouët</option>
+              <option value="Bingerville" data-ville="Abidjan">Bingerville</option>
+              <option value="Plateau" data-ville="Abidjan">Plateau</option>
+              <option value="Attécoubé" data-ville="Abidjan">Attécoubé</option>
+              <option value="Songon" data-ville="Abidjan">Songon</option>
+              <option value="Autre commune" data-ville="Abidjan">Autre commune</option>
+              <option value="Grand-Bassam" data-ville="Grand-Bassam">Grand-Bassam</option>
+              <option value="Dabou" data-ville="Dabou">Dabou</option>
+              <option value="Yamoussoukro" data-ville="Yamoussoukro">Yamoussoukro</option>
+              <option value="Bouaké" data-ville="Bouaké">Bouaké</option>
+              <option value="San-Pédro" data-ville="San-Pédro">San-Pédro</option>
+              <option value="Non précisée" data-ville="Côte d’Ivoire">Non précisée</option>
+            <!--FIN:communes-->
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="label" for="i-quartier">Quartier (facultatif)</label>
+              <input class="field" id="i-quartier" name="quartier" placeholder="Ex. Riviera Bonoumin" />
+              <p class="mt-1.5 text-[12px] text-ink-500">
+                Seuls la ville, la commune et le quartier apparaissent publiquement — jamais l’adresse complète.
+              </p>
+            </div>
+          </div>
+
+          <fieldset class="mt-6">
+            <legend class="label mb-2">Tranche d’âge</legend>
+            <div class="grid gap-1 sm:grid-cols-3">
+<!--DEBUT:ages-->
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50">
+              <input type="radio" name="age" value="18-25"
+                     class="h-4 w-4 shrink-0 border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">18 – 25 ans</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50">
+              <input type="radio" name="age" value="26-35"
+                     class="h-4 w-4 shrink-0 border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">26 – 35 ans</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50">
+              <input type="radio" name="age" value="36-45"
+                     class="h-4 w-4 shrink-0 border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">36 – 45 ans</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50">
+              <input type="radio" name="age" value="46-55"
+                     class="h-4 w-4 shrink-0 border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">46 – 55 ans</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50">
+              <input type="radio" name="age" value="56+"
+                     class="h-4 w-4 shrink-0 border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">56 ans et plus</span>
+            </label>
+            <!--FIN:ages-->
+            </div>
+          </fieldset>
+
+          <!-- ============ 2. ÉGLISE ============ -->
+          <h2 class="mt-10 font-display text-[17px] font-bold">2. Dans l’église</h2>
+          <div class="mt-4 grid gap-5 sm:grid-cols-2">
+            <div>
+              <label class="label" for="i-dept">Département / ministère</label>
+              <input class="field" id="i-dept" name="departement" placeholder="Ex. MLA, Communication, Accueil…" />
+            </div>
+            <div>
+              <label class="label" for="i-famille">Famille d’église</label>
+              <select class="field" id="i-famille" name="famille">
+<!--DEBUT:familles-->
+              <option>Famille Pierre</option>
+              <option>Famille Paul</option>
+              <option>Famille Jean</option>
+              <option>Famille Jacques</option>
+              <option>Famille André</option>
+              <option>Invité</option>
+            <!--FIN:familles-->
+              </select>
+            </div>
+          </div>
+
+          <!-- ============ 3. PROFIL PROFESSIONNEL ============ -->
+          <h2 class="mt-10 font-display text-[17px] font-bold">3. Votre profil professionnel</h2>
+
+          <fieldset class="mt-4">
+            <legend class="label">Secteurs d’activité <span class="font-normal text-ink-400">(plusieurs choix possibles)</span></legend>
+            <div class="grid gap-1 sm:grid-cols-2" data-champ-secteurs>
+<!--DEBUT:secteurs-->
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Banque / Finance"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Banque / Finance</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Entrepreneuriat"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Entrepreneuriat</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Education"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Education</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Santé"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Santé</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Technologie"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Technologie</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Communication"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Communication</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Média"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Média</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Droit"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Droit</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Ingénierie"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Ingénierie</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Aide de maison"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Aide de maison</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Commerce"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Commerce</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Agriculture"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Agriculture</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Bâtiment"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Bâtiment</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Politique"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Politique</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="secteurs" value="Autre"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Autre</span>
+            </label>
+            <!--FIN:secteurs-->
+            </div>
+          </fieldset>
+
+          <fieldset class="mt-6">
+            <legend class="label">Métier précis</legend>
+            <p class="mb-2 text-[12.5px] text-ink-500" data-aide-metiers>
+              Cochez d’abord un secteur ci-dessus&nbsp;: les métiers correspondants apparaîtront ici.
+            </p>
+            <div data-champ-metiers>
+<!--DEBUT:metiers-->
+          <div class="hidden" data-metiers-de="Bâtiment">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Bâtiment</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Maçon"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Maçon</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Peintre en bâtiment"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Peintre en bâtiment</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Électricien"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Électricien</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Plombier"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Plombier</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Carreleur"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Carreleur</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Menuisier"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Menuisier</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Charpentier / Couvreur"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Charpentier / Couvreur</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Soudeur / Ferrailleur"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Soudeur / Ferrailleur</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Climatisation &amp; froid"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Climatisation &amp; froid</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Architecte"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Architecte</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Décorateur d’intérieur"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Décorateur d’intérieur</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Conducteur de travaux"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Conducteur de travaux</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Métreur / Économiste de la construction"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Métreur / Économiste de la construction</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Géomètre"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Géomètre</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Promotion immobilière"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Promotion immobilière</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Technologie">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Technologie</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Développeur web"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Développeur web</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Développeur mobile"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Développeur mobile</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Data analyst / Data scientist"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Data analyst / Data scientist</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Cybersécurité"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Cybersécurité</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Administrateur réseau &amp; systèmes"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Administrateur réseau &amp; systèmes</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Support &amp; maintenance informatique"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Support &amp; maintenance informatique</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Designer UI / UX"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Designer UI / UX</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Chef de projet digital"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Chef de projet digital</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Fintech"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Fintech</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Intelligence artificielle"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Intelligence artificielle</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Santé">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Santé</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Médecin"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Médecin</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Infirmier(ère)"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Infirmier(ère)</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Sage-femme"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Sage-femme</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Pharmacien(ne)"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Pharmacien(ne)</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Laborantin / Biologiste"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Laborantin / Biologiste</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Kinésithérapeute"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Kinésithérapeute</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Nutritionniste / Diététicien"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Nutritionniste / Diététicien</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Psychologue"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Psychologue</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Aide-soignant(e)"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Aide-soignant(e)</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Santé publique"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Santé publique</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Banque / Finance">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Banque / Finance</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Comptable"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Comptable</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Auditeur"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Auditeur</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Contrôleur de gestion"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Contrôleur de gestion</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Chargé de clientèle bancaire"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Chargé de clientèle bancaire</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Analyste financier"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Analyste financier</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Assurance"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Assurance</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Microfinance"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Microfinance</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Fiscaliste"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Fiscaliste</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Économie &amp; stratégie"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Économie &amp; stratégie</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Communication">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Communication</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Chargé(e) de communication"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Chargé(e) de communication</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Community manager"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Community manager</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Marketing digital"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Marketing digital</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Graphiste / Infographiste"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Graphiste / Infographiste</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Rédacteur / Copywriter"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Rédacteur / Copywriter</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Événementiel"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Événementiel</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Relations publiques &amp; presse"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Relations publiques &amp; presse</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Imprimerie &amp; signalétique"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Imprimerie &amp; signalétique</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Média">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Média</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Journaliste"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Journaliste</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Photographe"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Photographe</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Cadreur / Vidéaste"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Cadreur / Vidéaste</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Monteur vidéo"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Monteur vidéo</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Réalisateur / Producteur"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Réalisateur / Producteur</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Animateur radio / TV"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Animateur radio / TV</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Ingénieur du son"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Ingénieur du son</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Musicien / Artiste"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Musicien / Artiste</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Education">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Education</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Enseignant(e) primaire"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Enseignant(e) primaire</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Enseignant(e) secondaire"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Enseignant(e) secondaire</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Enseignant(e) supérieur"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Enseignant(e) supérieur</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Formateur / Formatrice"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Formateur / Formatrice</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Coach / Mentor"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Coach / Mentor</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Répétiteur / Soutien scolaire"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Répétiteur / Soutien scolaire</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Conseiller d’orientation"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Conseiller d’orientation</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Petite enfance"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Petite enfance</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Droit">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Droit</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Avocat(e)"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Avocat(e)</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Juriste d’entreprise"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Juriste d’entreprise</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Notaire"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Notaire</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Huissier"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Huissier</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Conseil &amp; médiation"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Conseil &amp; médiation</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Ingénierie">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Ingénierie</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Ingénieur civil / BTP"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Ingénieur civil / BTP</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Ingénieur mécanique"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Ingénieur mécanique</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Ingénieur électrique / électronique"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Ingénieur électrique / électronique</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Ingénieur industriel"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Ingénieur industriel</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Ingénieur agronome"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Ingénieur agronome</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Maintenance industrielle"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Maintenance industrielle</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Qualité / HSE"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Qualité / HSE</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Géologie / Mines"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Géologie / Mines</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Énergie &amp; pétrole"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Énergie &amp; pétrole</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Commerce">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Commerce</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Commercial(e)"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Commercial(e)</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Import-export &amp; négoce"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Import-export &amp; négoce</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Achats &amp; approvisionnement"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Achats &amp; approvisionnement</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Logistique &amp; transit"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Logistique &amp; transit</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Commerce en ligne"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Commerce en ligne</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Distribution &amp; grossiste"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Distribution &amp; grossiste</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Transport"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Transport</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Entrepreneuriat">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Entrepreneuriat</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Fondateur / Dirigeant"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Fondateur / Dirigeant</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Consultant(e)"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Consultant(e)</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Porteur de projet"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Porteur de projet</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Freelance / Indépendant"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Freelance / Indépendant</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Artisanat &amp; création"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Artisanat &amp; création</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Restauration &amp; traiteur"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Restauration &amp; traiteur</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Agriculture">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Agriculture</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Production végétale / Maraîchage"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Production végétale / Maraîchage</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Élevage"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Élevage</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Pisciculture &amp; pêche"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Pisciculture &amp; pêche</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Agro-transformation"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Agro-transformation</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Conseil agricole"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Conseil agricole</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Politique">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Politique</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Administration publique"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Administration publique</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Collectivité &amp; élu local"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Collectivité &amp; élu local</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="ONG &amp; société civile"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">ONG &amp; société civile</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Analyse &amp; stratégie politique"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Analyse &amp; stratégie politique</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Aide de maison">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Aide de maison</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Aide ménagère"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Aide ménagère</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Garde d’enfants"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Garde d’enfants</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Cuisinier(ère) à domicile"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Cuisinier(ère) à domicile</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Jardinier"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Jardinier</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Gardiennage &amp; sécurité"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Gardiennage &amp; sécurité</span>
+            </label>
+            </div>
+          </div>
+          <div class="hidden" data-metiers-de="Autre">
+            <p class="mt-3 mb-1 text-[12px] font-bold uppercase tracking-wider text-ink-400">Autre</p>
+            <div class="grid gap-1 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Ressources humaines"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Ressources humaines</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Assistanat de direction"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Assistanat de direction</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Immobilier"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Immobilier</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Hôtellerie &amp; tourisme"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Hôtellerie &amp; tourisme</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Traduction &amp; langues"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Traduction &amp; langues</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Sport &amp; bien-être"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Sport &amp; bien-être</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="Étudiant(e)"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Étudiant(e)</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="metiers" value="En recherche d’emploi"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">En recherche d’emploi</span>
+            </label>
+            </div>
+          </div>
+            <!--FIN:metiers-->
+            </div>
+            <div class="mt-4">
+              <label class="label" for="i-autre-metier">Autre métier / précision</label>
+              <input class="field" id="i-autre-metier" name="autre_metier"
+                     placeholder="Si votre métier n’est pas dans la liste" />
+            </div>
+          </fieldset>
+
+          <div class="mt-6 grid gap-5 sm:grid-cols-2">
+            <div>
+              <label class="label" for="i-exp">Niveau d’expérience</label>
+              <select class="field" id="i-exp" name="experience">
+<!--DEBUT:niveaux-->
+              <option>Débutant</option>
+              <option selected>1-5 ans</option>
+              <option>5-10 ans</option>
+              <option>Expert</option>
+            <!--FIN:niveaux-->
+              </select>
+            </div>
+            <div>
+              <label class="label" for="i-entreprise">Entreprise / structure (facultatif)</label>
+              <input class="field" id="i-entreprise" name="entreprise" />
+            </div>
+          </div>
+
+          <!-- ============ 4. RÉSEAU ============ -->
+          <h2 class="mt-10 font-display text-[17px] font-bold">4. Ce que vous recherchez</h2>
+          <p class="mt-1.5 text-[13.5px] leading-relaxed text-ink-500">
+            C’est ce qui transforme l’annuaire en réseau&nbsp;: vos objectifs apparaissent dans les
+            opportunités et alimentent les suggestions de mise en relation.
+          </p>
+          <fieldset class="mt-4">
+            <legend class="sr-only">Objectifs de connexion</legend>
+            <div class="grid gap-1 sm:grid-cols-2">
+<!--DEBUT:besoins-->
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="besoins" value="Emploi"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Une opportunité d’emploi</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="besoins" value="Partenariat"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Un partenaire d’affaires</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="besoins" value="Collaboration"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Une collaboration professionnelle</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="besoins" value="Projet"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Des personnes pour un projet</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="besoins" value="Investissement"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Un investisseur</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="besoins" value="Formation"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Une formation / de la montée en compétence</span>
+            </label>
+            <!--FIN:besoins-->
+            </div>
+          </fieldset>
+
+          <div class="mt-6">
+            <label class="label" for="i-apport">Ce que vous pouvez apporter aux autres</label>
+            <textarea class="field" id="i-apport" name="apport" rows="3"
+              placeholder="Ex. je peux accompagner un jeune entrepreneur, former sur Excel, relire un business plan…"></textarea>
+            <p class="mt-1.5 text-[12px] text-ink-500">
+              Ce champ remplacera l’estimation automatique affichée aujourd’hui sur les profils.
+            </p>
+          </div>
+
+          <fieldset class="mt-6">
+            <legend class="label">Centres d’intérêt <span class="font-normal text-ink-400">(plusieurs choix possibles)</span></legend>
+            <div class="grid gap-1 sm:grid-cols-2">
+<!--DEBUT:interets-->
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Entrepreneuriat"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Entrepreneuriat</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Musique &amp; louange"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Musique &amp; louange</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Sport"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Sport</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Lecture &amp; écriture"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Lecture &amp; écriture</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Technologie &amp; innovation"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Technologie &amp; innovation</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Éducation &amp; jeunesse"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Éducation &amp; jeunesse</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Santé &amp; bien-être"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Santé &amp; bien-être</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Arts &amp; création"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Arts &amp; création</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Agriculture &amp; environnement"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Agriculture &amp; environnement</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Finance &amp; investissement"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Finance &amp; investissement</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Bénévolat &amp; social"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Bénévolat &amp; social</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Voyage &amp; découverte"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Voyage &amp; découverte</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Cuisine &amp; gastronomie"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Cuisine &amp; gastronomie</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Mode &amp; beauté"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Mode &amp; beauté</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Immobilier"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Immobilier</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-ink-50 ">
+              <input type="checkbox" name="interets" value="Médias &amp; audiovisuel"
+                     class="h-4 w-4 shrink-0 rounded border-ink-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[13.5px] text-ink-700">Médias &amp; audiovisuel</span>
+            </label>
+            <!--FIN:interets-->
+            </div>
+          </fieldset>
+
+          <!-- ============ CONSENTEMENT ============ -->
+          <div class="mt-8 rounded-xl2 bg-brand-50 p-4">
+            <label class="flex cursor-pointer gap-3">
+              <input type="checkbox" name="consentement" value="oui" required
+                     class="mt-0.5 h-4 w-4 shrink-0 rounded border-brand-300 text-brand-600 focus:ring-brand-600" />
+              <span class="text-[12.5px] leading-relaxed text-brand-900">
+                J’autorise le MISI à publier mon nom, ma ville, ma commune, mon quartier, mes secteurs,
+                mon métier, mon niveau d’expérience, ma tranche d’âge, mes centres d’intérêt et mes
+                objectifs dans l’annuaire. Je comprends que mon téléphone, mon e-mail et mon adresse
+                exacte resteront privés et ne seront transmis qu’avec mon accord.
+              </span>
+            </label>
+          </div>
+
+          <div class="mt-6 flex flex-col gap-2" data-actions>
+            <button type="submit" class="btn-accent w-full py-3">Envoyer mon inscription</button>
+          </div>
+          <p class="mt-3 hidden rounded-lg bg-emerald-50 px-3.5 py-3 text-[13px] leading-relaxed text-emerald-800" data-ok></p>
+        </form>
+
+        <!-- ============ COLONNE LATÉRALE ============ -->
+        <aside class="space-y-4 lg:sticky lg:top-24 lg:self-start">
+          <div class="card p-5">
+            <p class="flex items-center gap-2 font-display text-[15px] font-bold">
+              <span class="text-brand-600" data-picto="cadenas"></span> Ce qui reste privé
+            </p>
+            <ul class="mt-3.5 space-y-2 text-[13.5px] text-ink-600">
+              <li class="flex items-center justify-between gap-3">Téléphone <span class="badge-neutral">Privé</span></li>
+              <li class="flex items-center justify-between gap-3">E-mail <span class="badge-neutral">Privé</span></li>
+              <li class="flex items-center justify-between gap-3">Adresse exacte <span class="badge-neutral">Privé</span></li>
+              <li class="flex items-center justify-between gap-3">Nom &amp; prénoms <span class="badge-emerald">Public</span></li>
+              <li class="flex items-center justify-between gap-3">Ville &amp; commune <span class="badge-emerald">Public</span></li>
+              <li class="flex items-center justify-between gap-3">Métier &amp; secteurs <span class="badge-emerald">Public</span></li>
+              <li class="flex items-center justify-between gap-3">Âge &amp; intérêts <span class="badge-emerald">Public</span></li>
+            </ul>
+          </div>
+
+          <div class="card p-5">
+            <p class="font-display text-[15px] font-bold">Ce que vous y gagnez</p>
+            <ul class="mt-3.5 space-y-3 text-[13.5px] leading-relaxed text-ink-600">
+              <li class="flex gap-2.5"><span class="mt-0.5 shrink-0 text-emerald-600" data-picto="check" data-taille="h-4 w-4"></span> Être trouvé par métier précis, pas seulement par secteur</li>
+              <li class="flex gap-2.5"><span class="mt-0.5 shrink-0 text-emerald-600" data-picto="check" data-taille="h-4 w-4"></span> Voir vos besoins publiés dans les opportunités</li>
+              <li class="flex gap-2.5"><span class="mt-0.5 shrink-0 text-emerald-600" data-picto="check" data-taille="h-4 w-4"></span> Apparaître dans les profils compatibles des autres membres</li>
+              <li class="flex gap-2.5"><span class="mt-0.5 shrink-0 text-emerald-600" data-picto="check" data-taille="h-4 w-4"></span> Être suggéré automatiquement dans les mises en relation</li>
+            </ul>
+          </div>
+
+          <div class="rounded-xl2 border border-ink-200 bg-ink-50 p-5">
+            <p class="text-[13px] leading-relaxed text-ink-500">
+              Déjà inscrit et vous souhaitez corriger ou retirer votre profil&nbsp;?
+              Écrivez au secrétariat MISI&nbsp;: la modification est appliquée à la prochaine
+              mise à jour de l’annuaire.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="border-t border-ink-200 bg-ink-50">
+      <div class="wrap flex flex-wrap items-center justify-between gap-4 py-8">
+        <p class="text-[13px] text-ink-500">© <span data-annee></span> MISI — ICC Riviera 2</p>
+        <a class="text-[13px] font-semibold text-brand-600 hover:underline" href="annuaire.html">Parcourir l’annuaire</a>
+      </div>
+    </footer>
+
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/site.js"></script>
+    <script src="assets/js/rejoindre.js"></script>
+    <script src="assets/js/chatbot.js"></script>
+  </body>
+</html>

@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Annuaire des compétences — ICC Riviera 2 · MISI</title>
+    <meta
+      name="description"
+      content="Découvrez, connectez et valorisez les talents de la communauté ICC Riviera 2. Trouvez une compétence, inscrivez votre profil, proposez une collaboration."
+    />
+    <meta name="theme-color" content="#366a82" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Annuaire MISI" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <a href="#contenu" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-3 focus:rounded-lg focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white">Aller au contenu</a>
+
+    <!-- ============================ EN-TÊTE ============================ -->
+    <header data-entete class="sticky top-0 z-40 border-b border-ink-200 bg-white/85 backdrop-blur-md transition-shadow">
+      <div class="wrap flex h-16 items-center gap-4">
+        <a href="index.html" class="flex shrink-0 items-center gap-3" aria-label="Accueil — Annuaire des compétences MISI">
+          <img src="assets/logo-misi-marque.png" width="429" height="161" class="h-9 w-auto"
+               alt="MISI — Ministère de l’Innovation et des Sphères d’Influence" />
+          <span class="hidden border-l border-ink-200 pl-3 leading-tight sm:block">
+            <span class="block font-display text-[14.5px] font-bold text-ink-900">Annuaire des compétences</span>
+            <span class="block text-[11px] text-ink-500">ICC Riviera 2</span>
+          </span>
+        </a>
+        <nav class="ml-auto hidden items-center gap-0.5 lg:flex" aria-label="Navigation principale">
+          <a class="btn-ghost bg-ink-100 text-ink-900" href="index.html" aria-current="page">Accueil</a>
+          <a class="btn-ghost" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost" href="emploi.html">Emploi</a>
+          <a class="btn-ghost" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost" href="opportunites.html">Opportunités</a>
+          <a class="btn-ghost" href="connexion.html">Mise en relation</a>
+        </nav>
+        <a class="btn-accent ml-auto hidden lg:ml-2 lg:inline-flex" href="rejoindre.html">Inscrire mon profil</a>
+        <button data-menu-bouton class="btn-ghost ml-auto p-2 lg:hidden" aria-expanded="false" aria-label="Ouvrir le menu">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+      </div>
+      <div data-menu class="hidden border-t border-ink-200 bg-white lg:hidden">
+        <nav class="wrap flex flex-col py-3">
+          <a class="btn-ghost justify-start" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost justify-start" href="emploi.html">Emploi</a>
+          <a class="btn-ghost justify-start" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost justify-start" href="opportunites.html">Opportunités</a>
+          <a class="btn-ghost justify-start" href="connexion.html">Mise en relation</a>
+          <a class="btn-accent mt-2" href="rejoindre.html">Inscrire mon profil</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenu">
+      <!-- ============================ HÉROS ============================ -->
+      <section class="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
+        <div class="pointer-events-none absolute -top-32 left-1/2 h-[420px] w-[900px] -translate-x-1/2 rounded-full bg-brand-100/50 blur-3xl"></div>
+        <div class="wrap relative py-16 sm:py-24">
+          <div class="mx-auto max-w-3xl text-center">
+            <p class="eyebrow" data-an>Impact Centre Chrétien · Riviera 2 — Ministère MISI</p>
+            <h1 class="mt-4 text-[34px] leading-[1.1] font-extrabold sm:text-5xl lg:text-[56px]" data-an>
+              Découvrez, connectez et valorisez<br class="hidden sm:block" />
+              <span class="text-brand-600">les talents de notre communauté.</span>
+            </h1>
+            <p class="mx-auto mt-5 max-w-2xl text-[17px] leading-relaxed text-ink-600" data-an>
+              L’annuaire des compétences séculières rassemble les professionnels de l’église.
+              Cherchez la compétence dont vous avez besoin, faites-vous connaître, et
+              transformez les rencontres du dimanche en collaborations concrètes.
+            </p>
+          </div>
+
+          <!-- Les 3 actions -->
+          <div class="mx-auto mt-11 grid max-w-4xl gap-4 sm:grid-cols-3">
+            <a href="annuaire.html" class="card card-hover group p-6 text-left" data-an>
+              <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-600 text-white" data-picto="loupe"></span>
+              <span class="mt-4 block font-display text-[17px] font-bold text-ink-900">Trouver une compétence</span>
+              <span class="mt-1.5 block text-sm leading-relaxed text-ink-500">
+                Parcourez les profils par métier, secteur, expérience ou commune.
+              </span>
+              <span class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand-600">
+                Explorer l’annuaire <span data-picto="fleche" data-taille="h-4 w-4" class="transition group-hover:translate-x-0.5"></span>
+              </span>
+            </a>
+            <a href="rejoindre.html" class="card card-hover group p-6 text-left" data-an>
+              <span class="grid h-11 w-11 place-items-center rounded-xl bg-orange-500 text-white" data-picto="plus"></span>
+              <span class="mt-4 block font-display text-[17px] font-bold text-ink-900">Inscrire mon profil</span>
+              <span class="mt-1.5 block text-sm leading-relaxed text-ink-500">
+                Rendez vos compétences visibles et dites ce que vous cherchez.
+              </span>
+              <span class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand-600">
+                Me faire connaître <span data-picto="fleche" data-taille="h-4 w-4" class="transition group-hover:translate-x-0.5"></span>
+              </span>
+            </a>
+            <a href="opportunites.html#publier" class="card card-hover group p-6 text-left" data-an>
+              <span class="grid h-11 w-11 place-items-center rounded-xl bg-ink-800 text-white" data-picto="eclair"></span>
+              <span class="mt-4 block font-display text-[17px] font-bold text-ink-900">Proposer une collaboration</span>
+              <span class="mt-1.5 block text-sm leading-relaxed text-ink-500">
+                Un poste, un projet, un partenariat, un mentorat à offrir&nbsp;?
+              </span>
+              <span class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand-600">
+                Publier une opportunité <span data-picto="fleche" data-taille="h-4 w-4" class="transition group-hover:translate-x-0.5"></span>
+              </span>
+            </a>
+          </div>
+
+          <div class="mx-auto mt-4 max-w-4xl">
+            <a href="accompagnement.html" class="card card-hover flex flex-wrap items-center gap-4 p-5 sm:flex-nowrap" data-an>
+              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brique-500 text-white" data-picto="eclair"></span>
+              <span class="min-w-0 flex-1">
+                <span class="block font-display text-[16px] font-bold text-ink-900">
+                  Vous portez un projet et vous bloquez&nbsp;?
+                </span>
+                <span class="mt-1 block text-[14px] leading-relaxed text-ink-500">
+                  Aide juridique, financement, business plan, technique — demandez un appel ou un
+                  rendez-vous pour analyser votre projet en profondeur.
+                </span>
+              </span>
+              <span class="btn-secondary shrink-0">
+                Demander un accompagnement <span data-picto="fleche" data-taille="h-4 w-4"></span>
+              </span>
+            </a>
+          </div>
+
+          <p class="mt-10 text-center font-display text-[15px] italic text-ink-500">
+            « Révéler les talents, connecter les compétences, influencer les nations »
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================ CHIFFRES ============================ -->
+      <section class="border-y border-ink-200 bg-white">
+        <div class="wrap grid grid-cols-2 divide-ink-200 py-8 sm:grid-cols-4 sm:divide-x" data-stats>
+          <!-- rendu par accueil.js -->
+        </div>
+      </section>
+
+      <!-- ============================ RECHERCHE RAPIDE ============================ -->
+      <section class="bg-ink-50 py-16 sm:py-20">
+        <div class="wrap">
+          <div class="mx-auto max-w-2xl text-center">
+            <p class="eyebrow">Recherche</p>
+            <h2 class="mt-3 text-3xl font-bold sm:text-[38px]">De qui avez-vous besoin&nbsp;?</h2>
+            <p class="mt-3 text-[15.5px] leading-relaxed text-ink-600">
+              Un nom, un métier, un secteur, une commune, un besoin&nbsp;: une seule barre de
+              recherche interroge toutes les informations du profil.
+            </p>
+          </div>
+
+          <form class="mx-auto mt-8 flex max-w-2xl flex-col gap-2.5 sm:flex-row" action="annuaire.html" method="get">
+            <div class="relative flex-1">
+              <span class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-400" data-picto="loupe"></span>
+              <input
+                type="search" name="q" class="field py-3 pl-11 text-[15px]"
+                placeholder="Ex. communication, comptable, Yopougon, mentorat…"
+                aria-label="Rechercher dans l’annuaire"
+              />
+            </div>
+            <button class="btn-primary px-6 py-3">Rechercher</button>
+          </form>
+
+          <div class="mx-auto mt-5 flex max-w-3xl flex-wrap justify-center gap-2" data-suggestions></div>
+        </div>
+      </section>
+
+      <!-- ============================ SECTEURS ============================ -->
+      <section class="py-16 sm:py-20">
+        <div class="wrap">
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <div class="max-w-xl">
+              <p class="eyebrow">Cartographie</p>
+              <h2 class="mt-3 text-3xl font-bold sm:text-[38px]">Les secteurs représentés</h2>
+              <p class="mt-3 text-[15.5px] leading-relaxed text-ink-600">
+                Chaque membre déclare un ou plusieurs domaines d’activité. Cliquez pour
+                filtrer l’annuaire.
+              </p>
+            </div>
+            <a class="btn-secondary" href="annuaire.html">Voir tous les profils</a>
+          </div>
+          <div class="mt-8" data-secteurs></div>
+        </div>
+      </section>
+
+      <!-- ============================ MÉTIERS ============================ -->
+      <section class="border-y border-ink-200 bg-ink-50 py-16 sm:py-20">
+        <div class="wrap">
+          <div class="mx-auto max-w-2xl text-center">
+            <p class="eyebrow">Sous-catégories</p>
+            <h2 class="mt-3 text-3xl font-bold sm:text-[38px]">Descendre au niveau du métier</h2>
+            <p class="mt-3 text-[15.5px] leading-relaxed text-ink-600">
+              Un secteur, c’est trop large pour trouver la bonne personne. Chaque domaine se
+              décline en métiers précis — peintre, électricien, comptable, graphiste, sage-femme…
+            </p>
+          </div>
+          <div class="mt-10" data-metiers></div>
+        </div>
+      </section>
+
+      <!-- ============================ RÉSEAU ============================ -->
+      <section class="bg-brand-900 py-16 text-white sm:py-20">
+        <div class="wrap">
+          <div class="mx-auto max-w-2xl text-center">
+            <p class="text-[11px] font-bold tracking-[0.14em] text-orange-300 uppercase">Dimension réseau</p>
+            <h2 class="mt-3 text-3xl font-bold text-white sm:text-[38px]">Qui peut aider qui&nbsp;?</h2>
+            <p class="mt-3 text-[15.5px] leading-relaxed text-ink-300">
+              L’annuaire ne répond pas seulement à «&nbsp;qui sait faire quoi&nbsp;».
+              Chaque profil indique ce qu’il recherche et ce qu’il peut apporter&nbsp;:
+              mentorat, recrutement, partenariat, conseil, formation, collaboration, investissement.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-5 lg:grid-cols-2">
+            <div class="rounded-xl2 bg-white/5 p-6 ring-1 ring-white/10">
+              <h3 class="flex items-center gap-2 text-[15px] font-bold text-white">
+                <span class="text-orange-300" data-picto="cible" data-taille="h-5 w-5"></span>
+                Ce que la communauté recherche
+              </h3>
+              <p class="mt-1 text-[13px] text-ink-400">Besoins déclarés par les membres.</p>
+              <div class="mt-5 space-y-2.5" data-besoins></div>
+            </div>
+            <div class="rounded-xl2 bg-white/5 p-6 ring-1 ring-white/10">
+              <h3 class="flex items-center gap-2 text-[15px] font-bold text-white">
+                <span class="text-brand-300" data-picto="etincelle" data-taille="h-5 w-5"></span>
+                Ce que la communauté peut apporter
+              </h3>
+              <p class="mt-1 text-[13px] text-ink-400">Estimé à partir de l’expérience déclarée.</p>
+              <div class="mt-5 space-y-2.5" data-apports></div>
+            </div>
+          </div>
+
+          <div class="mt-8 text-center">
+            <a class="btn bg-white px-6 py-3 text-ink-900 hover:bg-ink-100" href="connexion.html">
+              Lancer une recherche de mise en relation
+              <span data-picto="fleche" data-taille="h-4 w-4"></span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ PROFILS ============================ -->
+      <section class="py-16 sm:py-20">
+        <div class="wrap">
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <div class="max-w-xl">
+              <p class="eyebrow">Talents</p>
+              <h2 class="mt-3 text-3xl font-bold sm:text-[38px]">Profils les plus expérimentés</h2>
+              <p class="mt-3 text-[15.5px] leading-relaxed text-ink-600">
+                Des membres susceptibles d’apporter du mentorat, du conseil ou de la formation.
+              </p>
+            </div>
+            <a class="btn-secondary" href="annuaire.html?apport=mentorat">Voir tous les mentors</a>
+          </div>
+          <div class="mt-8" data-profils></div>
+        </div>
+      </section>
+
+      <!-- ============================ OPPORTUNITÉS ============================ -->
+      <section class="bg-ink-50 py-16 sm:py-20">
+        <div class="wrap">
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <div class="max-w-xl">
+              <p class="eyebrow">Opportunités</p>
+              <h2 class="mt-3 text-3xl font-bold sm:text-[38px]">Ce qui se cherche en ce moment</h2>
+              <p class="mt-3 text-[15.5px] leading-relaxed text-ink-600">
+                Chaque besoin déclaré devient une opportunité visible&nbsp;: si vous pouvez y
+                répondre, une demande de mise en relation suffit.
+              </p>
+            </div>
+            <a class="btn-secondary" href="opportunites.html">Toutes les opportunités</a>
+          </div>
+          <div class="mt-8" data-opportunites></div>
+        </div>
+      </section>
+
+      <!-- ============================ CONFIDENTIALITÉ ============================ -->
+      <section class="py-16 sm:py-20">
+        <div class="wrap grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <p class="eyebrow">Confiance</p>
+            <h2 class="mt-3 text-3xl font-bold sm:text-[38px]">Vos coordonnées ne sont jamais publiées</h2>
+            <p class="mt-4 text-[15.5px] leading-relaxed text-ink-600">
+              Téléphone, e-mail et adresse restent dans le registre privé du ministère.
+              Le site n’affiche que la commune, le secteur et les objectifs. Toute prise de
+              contact passe par une demande de mise en relation traitée par le secrétariat MISI.
+            </p>
+            <ul class="mt-6 space-y-3">
+              <li class="flex gap-3 text-[15px] text-ink-700">
+                <span class="mt-0.5 shrink-0 text-emerald-600" data-picto="check" data-taille="h-5 w-5"></span>
+                Aucune donnée de contact dans les pages publiques
+              </li>
+              <li class="flex gap-3 text-[15px] text-ink-700">
+                <span class="mt-0.5 shrink-0 text-emerald-600" data-picto="check" data-taille="h-5 w-5"></span>
+                Le membre est prévenu avant toute transmission
+              </li>
+              <li class="flex gap-3 text-[15px] text-ink-700">
+                <span class="mt-0.5 shrink-0 text-emerald-600" data-picto="check" data-taille="h-5 w-5"></span>
+                Partage d’un profil par WhatsApp sans exposer ses coordonnées
+              </li>
+            </ul>
+          </div>
+          <div class="card p-7">
+            <div class="flex items-center gap-3">
+              <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600" data-picto="cadenas"></span>
+              <div>
+                <p class="font-display font-bold text-ink-900">Bouton « Contacter »</p>
+                <p class="text-[13px] text-ink-500">au lieu du numéro affiché</p>
+              </div>
+            </div>
+            <div class="mt-5 space-y-2.5 rounded-xl2 bg-ink-50 p-4">
+              <div class="flex items-center justify-between gap-3 text-[13.5px]">
+                <span class="text-ink-500">Téléphone</span>
+                <span class="badge-neutral">••• ••• •••</span>
+              </div>
+              <div class="flex items-center justify-between gap-3 text-[13.5px]">
+                <span class="text-ink-500">E-mail</span>
+                <span class="badge-neutral">•••••@••••</span>
+              </div>
+              <div class="flex items-center justify-between gap-3 text-[13.5px]">
+                <span class="text-ink-500">Commune</span>
+                <span class="badge-emerald">Visible</span>
+              </div>
+            </div>
+            <div class="mt-4 flex flex-col gap-2">
+              <span class="btn-primary pointer-events-none w-full opacity-90">Demander une mise en relation</span>
+              <span class="btn-whatsapp pointer-events-none w-full opacity-90">Partager sur WhatsApp</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ APPEL FINAL ============================ -->
+      <section class="pb-20">
+        <div class="wrap">
+          <div class="overflow-hidden rounded-2xl bg-brand-600 px-8 py-14 text-center sm:px-14">
+            <h2 class="mx-auto max-w-2xl text-3xl font-bold text-white sm:text-[38px]">
+              Votre compétence manque peut-être à quelqu’un aujourd’hui.
+            </h2>
+            <p class="mx-auto mt-4 max-w-xl text-[15.5px] leading-relaxed text-brand-100">
+              Deux minutes suffisent pour inscrire votre profil et rejoindre les membres déjà référencés.
+            </p>
+            <div class="mt-8 flex flex-wrap justify-center gap-3">
+              <a class="btn bg-white px-6 py-3 text-brand-700 hover:bg-brand-50" href="rejoindre.html">Inscrire mon profil</a>
+              <a class="btn px-6 py-3 text-white ring-1 ring-white/40 hover:bg-white/10" href="annuaire.html">Parcourir l’annuaire</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================ PIED ============================ -->
+    <footer class="border-t border-ink-200 bg-ink-50">
+      <div class="wrap grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="lg:col-span-2">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <img src="assets/logo-misi.png" width="432" height="248" class="h-20 w-auto self-start"
+                 alt="MISI — Ministère de l’Innovation et des Sphères d’Influence" />
+            <span class="leading-tight sm:border-l sm:border-ink-200 sm:pl-4">
+              <span class="block font-display text-[15px] font-bold text-ink-900">Annuaire des compétences séculières</span>
+              <span class="block text-[12px] text-ink-500">Impact Centre Chrétien · Riviera 2</span>
+            </span>
+          </div>
+          <p class="mt-4 max-w-md text-[13.5px] leading-relaxed text-ink-500">
+            Une initiative du <strong class="font-semibold text-ink-700">MISI</strong> — Ministère de
+            l’Innovation et des Sphères d’Influences. Identifier, connecter et valoriser les
+            potentiels au sein de l’Église.
+          </p>
+        </div>
+        <div>
+          <p class="text-[12px] font-bold tracking-wider text-ink-900 uppercase">Naviguer</p>
+          <ul class="mt-3 space-y-2 text-[14px] text-ink-600">
+            <li><a class="hover:text-brand-600" href="annuaire.html">Annuaire</a></li>
+            <li><a class="hover:text-brand-600" href="opportunites.html">Opportunités</a></li>
+            <li><a class="hover:text-brand-600" href="connexion.html">Mise en relation</a></li>
+            <li><a class="hover:text-brand-600" href="rejoindre.html">Inscrire mon profil</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-[12px] font-bold tracking-wider text-ink-900 uppercase">Confidentialité</p>
+          <p class="mt-3 text-[13.5px] leading-relaxed text-ink-500">
+            Aucune coordonnée personnelle n’est publiée sur ce site. Pour corriger ou retirer
+            votre profil, contactez le secrétariat MISI.
+          </p>
+        </div>
+      </div>
+      <div class="border-t border-ink-200">
+        <div class="wrap flex flex-wrap items-center justify-between gap-3 py-5 text-[12.5px] text-ink-500">
+          <span>© <span data-annee></span> MISI — ICC Riviera 2</span>
+          <span data-maj></span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/site.js"></script>
+    <script src="assets/js/accueil.js"></script>
+    <script src="assets/js/chatbot.js"></script>
+  </body>
+</html>

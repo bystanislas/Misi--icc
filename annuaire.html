@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Annuaire des profils — ICC Riviera 2 · MISI</title>
+    <meta name="description" content="Recherchez un membre par nom, métier, compétence, secteur, expérience, commune, ou par ce qu’il recherche et ce qu’il peut apporter." />
+    <meta name="theme-color" content="#366a82" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Annuaire MISI" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <header data-entete class="sticky top-0 z-40 border-b border-ink-200 bg-white/85 backdrop-blur-md transition-shadow">
+      <div class="wrap flex h-16 items-center gap-4">
+        <a href="index.html" class="flex shrink-0 items-center gap-3" aria-label="Accueil — Annuaire des compétences MISI">
+          <img src="assets/logo-misi-marque.png" width="429" height="161" class="h-9 w-auto"
+               alt="MISI — Ministère de l’Innovation et des Sphères d’Influence" />
+          <span class="hidden border-l border-ink-200 pl-3 leading-tight sm:block">
+            <span class="block font-display text-[14.5px] font-bold text-ink-900">Annuaire des compétences</span>
+            <span class="block text-[11px] text-ink-500">ICC Riviera 2</span>
+          </span>
+        </a>
+        <nav class="ml-auto hidden items-center gap-0.5 lg:flex" aria-label="Navigation principale">
+          <a class="btn-ghost" href="index.html">Accueil</a>
+          <a class="btn-ghost bg-ink-100 text-ink-900" href="annuaire.html" aria-current="page">Annuaire</a>
+          <a class="btn-ghost" href="emploi.html">Emploi</a>
+          <a class="btn-ghost" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost" href="opportunites.html">Opportunités</a>
+          <a class="btn-ghost" href="connexion.html">Mise en relation</a>
+        </nav>
+        <a class="btn-accent ml-auto hidden lg:ml-2 lg:inline-flex" href="rejoindre.html">Inscrire mon profil</a>
+        <button data-menu-bouton class="btn-ghost ml-auto p-2 lg:hidden" aria-expanded="false" aria-label="Ouvrir le menu">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+      </div>
+      <div data-menu class="hidden border-t border-ink-200 bg-white lg:hidden">
+        <nav class="wrap flex flex-col py-3">
+          <a class="btn-ghost justify-start" href="index.html">Accueil</a>
+          <a class="btn-ghost justify-start" href="emploi.html">Emploi</a>
+          <a class="btn-ghost justify-start" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost justify-start" href="opportunites.html">Opportunités</a>
+          <a class="btn-ghost justify-start" href="connexion.html">Mise en relation</a>
+          <a class="btn-accent mt-2" href="rejoindre.html">Inscrire mon profil</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Bandeau + recherche -->
+      <section class="border-b border-ink-200 bg-gradient-to-b from-brand-50 to-white">
+        <div class="wrap py-10 sm:py-12">
+          <p class="eyebrow">Annuaire</p>
+          <h1 class="mt-3 text-3xl font-bold sm:text-[40px]">Trouver une compétence</h1>
+          <p class="mt-3 max-w-2xl text-[15.5px] leading-relaxed text-ink-600">
+            Cherchez par nom, métier, compétence, secteur, expérience ou commune — mais aussi
+            par ce que la personne <strong class="font-semibold text-ink-800">recherche</strong>
+            et ce qu’elle <strong class="font-semibold text-ink-800">peut apporter</strong>.
+          </p>
+
+          <div class="relative mt-6 max-w-2xl">
+            <span class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-400" data-picto="loupe"></span>
+            <input id="q" type="search" class="field py-3.5 pr-11 pl-11 text-[15px] shadow-card"
+                   placeholder="Ex. Data Analyst, Communication, Yopougon, investisseur…"
+                   aria-label="Rechercher dans l’annuaire" />
+            <button class="absolute top-1/2 right-2 hidden -translate-y-1/2 rounded-md p-1.5 text-ink-400 hover:bg-ink-100 hover:text-ink-700"
+                    data-vider-q aria-label="Effacer la recherche" data-picto="fermer" data-taille="h-4 w-4"></button>
+          </div>
+        </div>
+      </section>
+
+      <div class="wrap grid gap-8 py-10 lg:grid-cols-[270px_1fr] lg:gap-10">
+        <!-- ============ FILTRES ============ -->
+        <aside class="lg:sticky lg:top-24 lg:self-start">
+          <button class="btn-secondary w-full lg:hidden" data-filtres-bouton aria-expanded="false">
+            <span data-picto="filtre" data-taille="h-4 w-4"></span> Filtres
+            <span class="ml-1 rounded-full bg-brand-600 px-1.5 text-[11px] text-white" data-compteur-filtres hidden></span>
+          </button>
+
+          <div class="mt-4 hidden lg:mt-0 lg:block" data-filtres>
+            <div class="flex items-center justify-between">
+              <h2 class="font-display text-[15px] font-bold">Filtres</h2>
+              <button class="text-[12.5px] font-semibold text-brand-600 hover:underline" data-reinit>Tout effacer</button>
+            </div>
+            <div class="mt-4 space-y-1.5" data-facettes></div>
+          </div>
+        </aside>
+
+        <!-- ============ RÉSULTATS ============ -->
+        <section>
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <p class="text-[14px] text-ink-600" data-resume-resultats aria-live="polite"></p>
+            <div class="flex items-center gap-2">
+              <label class="sr-only" for="tri">Trier</label>
+              <select id="tri" class="field w-auto py-2 text-[13px]">
+                <option value="pertinence">Trier : pertinence</option>
+                <option value="nom">Trier : nom (A → Z)</option>
+                <option value="experience">Trier : expérience</option>
+                <option value="zone">Trier : commune</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-3 flex flex-wrap gap-2" data-actifs></div>
+
+          <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3" data-resultats></div>
+
+          <div class="hidden py-16 text-center" data-vide>
+            <p class="font-display text-lg font-bold text-ink-900">Aucun profil ne correspond</p>
+            <p class="mx-auto mt-2 max-w-sm text-[14.5px] leading-relaxed text-ink-500">
+              Essayez avec moins de filtres, ou décrivez votre besoin dans l’outil de mise en relation.
+            </p>
+            <div class="mt-6 flex flex-wrap justify-center gap-2">
+              <button class="btn-secondary" data-reinit>Effacer les filtres</button>
+              <a class="btn-primary" href="connexion.html">Décrire mon besoin</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="border-t border-ink-200 bg-ink-50">
+      <div class="wrap flex flex-wrap items-center justify-between gap-4 py-8">
+        <p class="max-w-xl text-[13px] leading-relaxed text-ink-500">
+          <strong class="font-semibold text-ink-700">Confidentialité —</strong> aucun téléphone,
+          e-mail ou adresse n’est publié sur ce site. Les prises de contact passent par une
+          demande de mise en relation traitée par le secrétariat MISI.
+        </p>
+        <span class="text-[12.5px] text-ink-500" data-maj></span>
+      </div>
+    </footer>
+
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/site.js"></script>
+    <script src="assets/js/annuaire.js"></script>
+    <script src="assets/js/chatbot.js"></script>
+  </body>
+</html>

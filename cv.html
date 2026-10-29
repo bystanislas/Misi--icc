@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Créer mon CV — ICC Riviera 2 · MISI</title>
+    <meta name="description" content="Générateur de CV professionnel : mise en page automatique, export PDF et Word, assistance à la rédaction." />
+    <meta name="theme-color" content="#366a82" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Annuaire MISI" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <header data-entete class="sans-impression "sticky top-0 z-40 border-b border-ink-200 bg-white/85 backdrop-blur-md transition-shadow">
+      <div class="wrap flex h-16 items-center gap-4">
+        <a href="index.html" class="flex shrink-0 items-center gap-3" aria-label="Accueil — Annuaire des compétences MISI">
+          <img src="assets/logo-misi-marque.png" width="429" height="161" class="h-9 w-auto"
+               alt="MISI — Ministère de l’Innovation et des Sphères d’Influence" />
+          <span class="hidden border-l border-ink-200 pl-3 leading-tight sm:block">
+            <span class="block font-display text-[14.5px] font-bold text-ink-900">Annuaire des compétences</span>
+            <span class="block text-[11px] text-ink-500">ICC Riviera 2</span>
+          </span>
+        </a>
+        <nav class="ml-auto hidden items-center gap-0.5 lg:flex" aria-label="Navigation principale">
+          <a class="btn-ghost" href="index.html">Accueil</a>
+          <a class="btn-ghost" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost bg-ink-100 text-ink-900" href="emploi.html" aria-current="page">Emploi</a>
+          <a class="btn-ghost" href="opportunites.html">Opportunités</a>
+          <a class="btn-ghost" href="connexion.html">Mise en relation</a>
+        </nav>
+        <a class="btn-accent ml-auto hidden lg:ml-2 lg:inline-flex" href="rejoindre.html">Inscrire mon profil</a>
+        <button data-menu-bouton class="btn-ghost ml-auto p-2 lg:hidden" aria-expanded="false" aria-label="Ouvrir le menu">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+      </div>
+      <div data-menu class="hidden border-t border-ink-200 bg-white lg:hidden">
+        <nav class="wrap flex flex-col py-3">
+          <a class="btn-ghost justify-start" href="index.html">Accueil</a>
+          <a class="btn-ghost justify-start" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost justify-start" href="emploi.html">Emploi</a>
+          <a class="btn-ghost justify-start" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost justify-start" href="connexion.html">Mise en relation</a>
+          <a class="btn-accent mt-2" href="rejoindre.html">Inscrire mon profil</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="border-b border-ink-200 bg-gradient-to-b from-brand-50 to-white sans-impression">
+        <div class="wrap py-8 sm:py-10">
+          <p class="eyebrow">Générateur de CV</p>
+          <h1 class="mt-3 text-3xl font-bold sm:text-[38px]">Créez un CV professionnel</h1>
+          <p class="mt-3 max-w-2xl text-[15.5px] leading-relaxed text-ink-600">
+            Remplissez le formulaire, la mise en page se fait toute seule. Le résultat se
+            télécharge en <strong class="font-semibold text-ink-800">PDF</strong> ou en
+            <strong class="font-semibold text-ink-800">Word</strong>, et reste modifiable —
+            votre saisie est conservée sur cet appareil.
+          </p>
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            <button class="btn-primary" data-pdf>Télécharger en PDF</button>
+            <button class="btn-secondary" data-word>Télécharger en Word</button>
+            <button class="btn-ghost" data-exemple>Remplir avec un exemple</button>
+            <button class="btn-ghost text-brique-600 hover:bg-brique-50" data-vider>Tout effacer</button>
+            <span class="text-[12.5px] text-ink-400" data-sauvegarde></span>
+          </div>
+        </div>
+      </section>
+
+      <div class="wrap grid gap-8 py-10 xl:grid-cols-[minmax(0,420px)_1fr] xl:gap-12">
+        <!-- ============ FORMULAIRE ============ -->
+        <form class="space-y-4 sans-impression" data-form-cv autocomplete="on">
+          <!-- Identité -->
+          <details class="card overflow-hidden" open>
+            <summary class="flex cursor-pointer list-none items-center justify-between px-5 py-4">
+              <span class="font-display text-[15px] font-bold">1. Identité &amp; contact</span>
+              <svg class="h-4 w-4 text-ink-400 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="grid gap-4 border-t border-ink-100 px-5 py-5 sm:grid-cols-2">
+              <div class="sm:col-span-2">
+                <label class="label" for="cv-nom">Nom et prénoms</label>
+                <input class="field" id="cv-nom" name="nom" placeholder="Ex. Kouassi Marie-Laure" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="label" for="cv-poste">Titre / poste visé</label>
+                <input class="field" id="cv-poste" name="poste" placeholder="Ex. Assistante comptable" />
+              </div>
+              <div>
+                <label class="label" for="cv-tel">Téléphone</label>
+                <input class="field" id="cv-tel" name="telephone" placeholder="+225 07 00 00 00 00" />
+              </div>
+              <div>
+                <label class="label" for="cv-email">E-mail</label>
+                <input class="field" id="cv-email" name="email" type="email" />
+              </div>
+              <div>
+                <label class="label" for="cv-ville">Ville / commune</label>
+                <input class="field" id="cv-ville" name="ville" placeholder="Ex. Abidjan, Cocody" />
+              </div>
+              <div>
+                <label class="label" for="cv-lien">LinkedIn / portfolio</label>
+                <input class="field" id="cv-lien" name="lien" placeholder="linkedin.com/in/…" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="label" for="cv-permis">Permis, mobilité (facultatif)</label>
+                <input class="field" id="cv-permis" name="permis" placeholder="Ex. Permis B, véhiculée" />
+              </div>
+            </div>
+          </details>
+
+          <!-- Accroche -->
+          <details class="card overflow-hidden" open>
+            <summary class="flex cursor-pointer list-none items-center justify-between px-5 py-4">
+              <span class="font-display text-[15px] font-bold">2. Accroche</span>
+              <svg class="h-4 w-4 text-ink-400 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="border-t border-ink-100 px-5 py-5">
+              <label class="label" for="cv-accroche">Deux ou trois phrases sur vous</label>
+              <textarea class="field" id="cv-accroche" name="accroche" rows="4"
+                placeholder="Qui vous êtes, ce que vous savez faire, ce que vous cherchez."></textarea>
+              <div class="mt-2 flex items-center gap-2" data-ia="accroche" data-cible="cv-accroche"></div>
+            </div>
+          </details>
+
+          <!-- Expériences -->
+          <details class="card overflow-hidden" open>
+            <summary class="flex cursor-pointer list-none items-center justify-between px-5 py-4">
+              <span class="font-display text-[15px] font-bold">3. Expériences</span>
+              <svg class="h-4 w-4 text-ink-400 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="border-t border-ink-100 px-5 py-5">
+              <div class="space-y-4" data-liste-experiences></div>
+              <button type="button" class="btn-secondary mt-4 w-full" data-ajouter="experience">
+                <span data-picto="plus" data-taille="h-4 w-4"></span> Ajouter une expérience
+              </button>
+            </div>
+          </details>
+
+          <!-- Formations -->
+          <details class="card overflow-hidden" open>
+            <summary class="flex cursor-pointer list-none items-center justify-between px-5 py-4">
+              <span class="font-display text-[15px] font-bold">4. Formations</span>
+              <svg class="h-4 w-4 text-ink-400 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="border-t border-ink-100 px-5 py-5">
+              <div class="space-y-4" data-liste-formations></div>
+              <button type="button" class="btn-secondary mt-4 w-full" data-ajouter="formation">
+                <span data-picto="plus" data-taille="h-4 w-4"></span> Ajouter une formation
+              </button>
+            </div>
+          </details>
+
+          <!-- Compétences -->
+          <details class="card overflow-hidden" open>
+            <summary class="flex cursor-pointer list-none items-center justify-between px-5 py-4">
+              <span class="font-display text-[15px] font-bold">5. Compétences &amp; langues</span>
+              <svg class="h-4 w-4 text-ink-400 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="space-y-5 border-t border-ink-100 px-5 py-5">
+              <div>
+                <label class="label" for="cv-competences">Compétences (une par ligne ou séparées par des virgules)</label>
+                <textarea class="field" id="cv-competences" name="competences" rows="4"
+                  placeholder="Excel avancé&#10;Comptabilité générale&#10;SAGE Saari"></textarea>
+                <div class="mt-2 flex items-center gap-2" data-ia="competences" data-cible="cv-competences"></div>
+              </div>
+              <div>
+                <label class="label" for="cv-langues">Langues (une par ligne : « Français — courant »)</label>
+                <textarea class="field" id="cv-langues" name="langues" rows="3"
+                  placeholder="Français — langue maternelle&#10;Anglais — intermédiaire"></textarea>
+              </div>
+              <div>
+                <label class="label" for="cv-interets">Centres d’intérêt</label>
+                <input class="field" id="cv-interets" name="interets" placeholder="Musique, sport, bénévolat…" />
+              </div>
+              <div>
+                <label class="label" for="cv-references">Références (facultatif)</label>
+                <textarea class="field" id="cv-references" name="references" rows="2"
+                  placeholder="Disponibles sur demande"></textarea>
+              </div>
+            </div>
+          </details>
+
+          <!-- Planche de travail -->
+          <details class="card overflow-hidden" open>
+            <summary class="flex cursor-pointer list-none items-center justify-between px-5 py-4">
+              <span class="font-display text-[15px] font-bold">6. Design du CV</span>
+              <svg class="h-4 w-4 text-ink-400 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="space-y-6 border-t border-ink-100 px-5 py-5">
+              <div>
+                <span class="label">Modèle</span>
+                <div class="grid grid-cols-3 gap-2.5" data-modeles></div>
+              </div>
+
+              <div>
+                <span class="label">Couleur d’accent</span>
+                <div class="flex flex-wrap gap-2" data-couleurs></div>
+                <div class="mt-3 flex items-center gap-3">
+                  <input type="color" data-couleur-libre
+                         class="h-9 w-14 cursor-pointer rounded-lg border border-ink-200 bg-white p-1" />
+                  <label class="text-[12.5px] text-ink-500">Couleur personnalisée</label>
+                </div>
+              </div>
+
+              <div>
+                <span class="label">Police</span>
+                <div class="flex flex-wrap gap-2" data-polices></div>
+              </div>
+
+              <div class="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <span class="label">Densité</span>
+                  <div class="flex flex-wrap gap-2" data-densites></div>
+                </div>
+                <div>
+                  <span class="label">Taille du texte</span>
+                  <div class="flex flex-wrap gap-2" data-tailles></div>
+                </div>
+              </div>
+
+              <div>
+                <span class="label">Sections — ordre et visibilité</span>
+                <div class="space-y-1.5" data-sections></div>
+                <p class="mt-2 text-[12px] leading-relaxed text-ink-500">
+                  Les flèches réordonnent, la case affiche ou masque. Une section vide
+                  n’apparaît jamais, même cochée.
+                </p>
+              </div>
+
+              <button type="button" class="btn-secondary w-full" data-reinit-design>
+                Réinitialiser le design
+              </button>
+            </div>
+          </details>
+        </form>
+
+        <!-- ============ APERÇU ============ -->
+        <div>
+          <div class="mb-4 flex flex-wrap items-center justify-between gap-3 sans-impression">
+            <p class="text-[13px] font-semibold text-ink-600">Aperçu — format A4</p>
+            <div class="flex items-center gap-2">
+              <button class="btn-secondary btn-sm" data-zoom="-">−</button>
+              <span class="w-12 text-center text-[12.5px] tabular-nums text-ink-500" data-zoom-valeur>70 %</span>
+              <button class="btn-secondary btn-sm" data-zoom="+">+</button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl2 bg-ink-100 p-4 sm:p-8 sans-impression" data-scene>
+            <div class="origin-top mx-auto transition-transform duration-200" data-echelle>
+              <div id="zone-impression">
+                <div class="cv-page shadow-lift" data-cv></div>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-4 text-[12.5px] leading-relaxed text-ink-500 sans-impression">
+            <strong class="font-semibold text-ink-700">PDF —</strong> le bouton ouvre la fenêtre
+            d’impression&nbsp;: choisissez «&nbsp;Enregistrer au format PDF&nbsp;» comme destination.
+            Le texte reste sélectionnable et le fichier fait quelques dizaines de kilo-octets.
+            <strong class="font-semibold text-ink-700">Word —</strong> téléchargement direct d’un
+            fichier qui s’ouvre dans Word, Google Docs et LibreOffice.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="border-t border-ink-200 bg-ink-50 sans-impression">
+      <div class="wrap flex flex-wrap items-center justify-between gap-4 py-8">
+        <p class="max-w-xl text-[13px] leading-relaxed text-ink-500">
+          <strong class="font-semibold text-ink-700">Vos données restent chez vous —</strong>
+          le CV est fabriqué dans votre navigateur et sauvegardé sur cet appareil uniquement.
+          Rien n’est envoyé au site, sauf si vous utilisez l’assistance à la rédaction.
+        </p>
+        <a class="text-[13px] font-semibold text-brand-600 hover:underline" href="emploi.html">Retour à l’espace emploi</a>
+      </div>
+    </footer>
+
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/site.js"></script>
+    <script src="assets/js/cv-modeles.js"></script>
+    <script src="assets/js/cv.js"></script>
+  </body>
+</html>

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Opportunités — ICC Riviera 2 · MISI</title>
+    <meta name="description" content="Offres de collaboration, recherche de partenaires, mentorat, recrutement et projets entrepreneuriaux au sein de la communauté ICC Riviera 2." />
+    <meta name="theme-color" content="#366a82" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Annuaire MISI" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <header data-entete class="sticky top-0 z-40 border-b border-ink-200 bg-white/85 backdrop-blur-md transition-shadow">
+      <div class="wrap flex h-16 items-center gap-4">
+        <a href="index.html" class="flex shrink-0 items-center gap-3" aria-label="Accueil — Annuaire des compétences MISI">
+          <img src="assets/logo-misi-marque.png" width="429" height="161" class="h-9 w-auto"
+               alt="MISI — Ministère de l’Innovation et des Sphères d’Influence" />
+          <span class="hidden border-l border-ink-200 pl-3 leading-tight sm:block">
+            <span class="block font-display text-[14.5px] font-bold text-ink-900">Annuaire des compétences</span>
+            <span class="block text-[11px] text-ink-500">ICC Riviera 2</span>
+          </span>
+        </a>
+        <nav class="ml-auto hidden items-center gap-0.5 lg:flex" aria-label="Navigation principale">
+          <a class="btn-ghost" href="index.html">Accueil</a>
+          <a class="btn-ghost" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost" href="emploi.html">Emploi</a>
+          <a class="btn-ghost" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost bg-ink-100 text-ink-900" href="opportunites.html" aria-current="page">Opportunités</a>
+          <a class="btn-ghost" href="connexion.html">Mise en relation</a>
+        </nav>
+        <a class="btn-accent ml-auto hidden lg:ml-2 lg:inline-flex" href="rejoindre.html">Inscrire mon profil</a>
+        <button data-menu-bouton class="btn-ghost ml-auto p-2 lg:hidden" aria-expanded="false" aria-label="Ouvrir le menu">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+      </div>
+      <div data-menu class="hidden border-t border-ink-200 bg-white lg:hidden">
+        <nav class="wrap flex flex-col py-3">
+          <a class="btn-ghost justify-start" href="index.html">Accueil</a>
+          <a class="btn-ghost justify-start" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost justify-start" href="emploi.html">Emploi</a>
+          <a class="btn-ghost justify-start" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost justify-start" href="connexion.html">Mise en relation</a>
+          <a class="btn-accent mt-2" href="rejoindre.html">Inscrire mon profil</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="border-b border-ink-200 bg-gradient-to-b from-orange-50 to-white">
+        <div class="wrap py-10 sm:py-12">
+          <p class="eyebrow text-orange-700">Opportunités</p>
+          <h1 class="mt-3 text-3xl font-bold sm:text-[40px]">Ce qui se cherche dans la communauté</h1>
+          <p class="mt-3 max-w-2xl text-[15.5px] leading-relaxed text-ink-600">
+            Recrutement, partenariat, mentorat, projets entrepreneuriaux, investissement, formation&nbsp;:
+            chaque besoin déclaré par un membre est publié ici. Si vous pouvez y répondre,
+            une demande de mise en relation suffit.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a class="btn-primary" href="#publier">
+              <span data-picto="plus" data-taille="h-4 w-4"></span> Proposer une collaboration
+            </a>
+            <a class="btn-secondary" href="annuaire.html">Parcourir les profils</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ BARRE DE FILTRES (collante) ============ -->
+      <div class="sticky top-16 z-30 border-b border-ink-200 bg-white/90 backdrop-blur-md">
+        <div class="wrap py-4">
+          <div class="grid gap-2.5 lg:grid-cols-[minmax(200px,1fr)_auto_auto_auto_auto]">
+            <div class="relative">
+              <span class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-400" data-picto="loupe"></span>
+              <input id="q" type="search" class="field pl-11" placeholder="Métier, secteur, commune, nom…"
+                     aria-label="Filtrer les opportunités" />
+            </div>
+            <select id="secteur" class="field lg:w-52" aria-label="Filtrer par secteur"></select>
+            <select id="commune" class="field lg:w-48" aria-label="Filtrer par commune"></select>
+            <select id="tri" class="field lg:w-48" aria-label="Trier">
+              <option value="defaut">Profils variés</option>
+              <option value="experience">Plus expérimentés</option>
+              <option value="nom">Nom (A → Z)</option>
+            </select>
+            <div class="flex shrink-0 rounded-lg bg-ink-100 p-1" role="group" aria-label="Affichage">
+              <button class="flex-1 rounded-md px-3.5 py-1.5 text-[13px] font-semibold whitespace-nowrap transition"
+                      data-vue="rayons" aria-pressed="true">Par besoin</button>
+              <button class="flex-1 rounded-md px-3.5 py-1.5 text-[13px] font-semibold whitespace-nowrap transition"
+                      data-vue="grille" aria-pressed="false">Tout voir</button>
+            </div>
+          </div>
+
+          <div class="mt-3 flex flex-wrap items-center gap-2" data-types></div>
+        </div>
+      </div>
+
+      <!-- ============ RÉSULTATS ============ -->
+      <section class="wrap py-10">
+        <p class="text-[14px] text-ink-600" data-resume aria-live="polite"></p>
+
+        <!-- Vue « par besoin » : un rayon par type, défilement horizontal -->
+        <div class="mt-6 space-y-12" data-rayons></div>
+
+        <!-- Vue « tout voir » : grille classique -->
+        <div class="mt-6 hidden grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3" data-grille></div>
+
+        <div class="hidden py-16 text-center" data-vide>
+          <p class="font-display text-lg font-bold">Aucune opportunité pour ce filtre</p>
+          <p class="mx-auto mt-2 max-w-sm text-[14.5px] leading-relaxed text-ink-500">
+            Élargissez la recherche, ou publiez votre propre proposition — elle sera vue
+            par les membres du secteur concerné.
+          </p>
+          <div class="mt-6 flex flex-wrap justify-center gap-2">
+            <button class="btn-secondary" data-reinit>Effacer les filtres</button>
+            <a class="btn-primary" href="#publier">Publier une opportunité</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PUBLIER ============ -->
+      <section id="publier" class="border-t border-ink-200 bg-ink-50 py-16">
+        <div class="wrap grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
+          <div>
+            <p class="eyebrow">Publier</p>
+            <h2 class="mt-3 text-3xl font-bold">Proposer une collaboration</h2>
+            <p class="mt-3 text-[15.5px] leading-relaxed text-ink-600">
+              Un poste à pourvoir, un projet qui cherche des bras, un partenariat, un mentorat
+              que vous êtes prêt à offrir&nbsp;: décrivez-le ici. Le secrétariat MISI valide la
+              publication avant sa mise en ligne dans l’annuaire.
+            </p>
+            <ul class="mt-7 space-y-4">
+              <li class="flex gap-3.5">
+                <span class="mt-0.5 shrink-0 text-brand-600" data-picto="check" data-taille="h-5 w-5"></span>
+                <span class="text-[14.5px] leading-relaxed text-ink-700">
+                  <strong class="font-semibold text-ink-900">Vos coordonnées restent privées.</strong>
+                  Les réponses passent par le secrétariat.
+                </span>
+              </li>
+              <li class="flex gap-3.5">
+                <span class="mt-0.5 shrink-0 text-brand-600" data-picto="check" data-taille="h-5 w-5"></span>
+                <span class="text-[14.5px] leading-relaxed text-ink-700">
+                  <strong class="font-semibold text-ink-900">Diffusion ciblée.</strong>
+                  L’opportunité est rattachée à un secteur pour toucher les bons profils.
+                </span>
+              </li>
+              <li class="flex gap-3.5">
+                <span class="mt-0.5 shrink-0 text-brand-600" data-picto="check" data-taille="h-5 w-5"></span>
+                <span class="text-[14.5px] leading-relaxed text-ink-700">
+                  <strong class="font-semibold text-ink-900">Partage WhatsApp.</strong>
+                  Une fois publiée, l’annonce se relaie en un clic.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <form class="card p-6 sm:p-8" data-form-opportunite>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div class="sm:col-span-2">
+                <label class="label" for="o-titre">Intitulé de l’opportunité</label>
+                <input class="field" id="o-titre" name="titre" required placeholder="Ex. Recherche un graphiste pour une campagne" />
+              </div>
+              <div>
+                <label class="label" for="o-type">Type</label>
+                <select class="field" id="o-type" name="type">
+                  <option>Recrutement / offre d’emploi</option>
+                  <option>Partenariat d’affaires</option>
+                  <option>Collaboration professionnelle</option>
+                  <option>Projet entrepreneurial</option>
+                  <option>Mentorat / accompagnement</option>
+                  <option>Formation</option>
+                  <option>Investissement</option>
+                </select>
+              </div>
+              <div>
+                <label class="label" for="o-secteur">Secteur concerné</label>
+                <select class="field" id="o-secteur" name="secteur"></select>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="label" for="o-desc">Description</label>
+                <textarea class="field" id="o-desc" name="description" rows="4" required
+                  placeholder="Profil recherché, durée, lieu, conditions…"></textarea>
+              </div>
+              <div>
+                <label class="label" for="o-nom">Votre nom</label>
+                <input class="field" id="o-nom" name="nom" required autocomplete="name" />
+              </div>
+              <div>
+                <label class="label" for="o-zone">Commune</label>
+                <input class="field" id="o-zone" name="zone" placeholder="Ex. Cocody Riviera" />
+              </div>
+            </div>
+
+            <p class="mt-5 rounded-lg bg-brand-50 px-3.5 py-3 text-[12.5px] leading-relaxed text-brand-800">
+              <span class="inline-block align-text-bottom" data-picto="cadenas" data-taille="h-3.5 w-3.5"></span>
+              Votre annonce est transmise au secrétariat MISI pour validation. Vos coordonnées
+              ne sont pas publiées sur le site.
+            </p>
+
+            <div class="mt-5 flex flex-col gap-2" data-actions></div>
+            <p class="mt-3 hidden rounded-lg bg-emerald-50 px-3.5 py-3 text-[13px] text-emerald-800" data-ok></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-ink-200 bg-ink-50">
+      <div class="wrap flex flex-wrap items-center justify-between gap-4 py-8">
+        <p class="max-w-xl text-[13px] leading-relaxed text-ink-500">
+          <strong class="font-semibold text-ink-700">Source des opportunités —</strong> les besoins
+          affichés proviennent des objectifs de connexion déclarés par les membres lors de leur inscription.
+        </p>
+        <span class="text-[12.5px] text-ink-500" data-maj></span>
+      </div>
+    </footer>
+
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/site.js"></script>
+    <script src="assets/js/opportunites.js"></script>
+    <script src="assets/js/chatbot.js"></script>
+  </body>
+</html>

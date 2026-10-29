@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mise en relation — ICC Riviera 2 · MISI</title>
+    <meta name="description" content="Décrivez votre besoin : la plateforme propose automatiquement les profils les plus pertinents de la communauté ICC Riviera 2." />
+    <meta name="theme-color" content="#366a82" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Annuaire MISI" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <header data-entete class="sticky top-0 z-40 border-b border-ink-200 bg-white/85 backdrop-blur-md transition-shadow">
+      <div class="wrap flex h-16 items-center gap-4">
+        <a href="index.html" class="flex shrink-0 items-center gap-3" aria-label="Accueil — Annuaire des compétences MISI">
+          <img src="assets/logo-misi-marque.png" width="429" height="161" class="h-9 w-auto"
+               alt="MISI — Ministère de l’Innovation et des Sphères d’Influence" />
+          <span class="hidden border-l border-ink-200 pl-3 leading-tight sm:block">
+            <span class="block font-display text-[14.5px] font-bold text-ink-900">Annuaire des compétences</span>
+            <span class="block text-[11px] text-ink-500">ICC Riviera 2</span>
+          </span>
+        </a>
+        <nav class="ml-auto hidden items-center gap-0.5 lg:flex" aria-label="Navigation principale">
+          <a class="btn-ghost" href="index.html">Accueil</a>
+          <a class="btn-ghost" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost" href="emploi.html">Emploi</a>
+          <a class="btn-ghost" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost" href="opportunites.html">Opportunités</a>
+          <a class="btn-ghost bg-ink-100 text-ink-900" href="connexion.html" aria-current="page">Mise en relation</a>
+        </nav>
+        <a class="btn-accent ml-auto hidden lg:ml-2 lg:inline-flex" href="rejoindre.html">Inscrire mon profil</a>
+        <button data-menu-bouton class="btn-ghost ml-auto p-2 lg:hidden" aria-expanded="false" aria-label="Ouvrir le menu">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+      </div>
+      <div data-menu class="hidden border-t border-ink-200 bg-white lg:hidden">
+        <nav class="wrap flex flex-col py-3">
+          <a class="btn-ghost justify-start" href="index.html">Accueil</a>
+          <a class="btn-ghost justify-start" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost justify-start" href="emploi.html">Emploi</a>
+          <a class="btn-ghost justify-start" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost justify-start" href="opportunites.html">Opportunités</a>
+          <a class="btn-accent mt-2" href="rejoindre.html">Inscrire mon profil</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="border-b border-ink-200 bg-gradient-to-b from-brand-50 to-white">
+        <div class="wrap py-10 sm:py-12">
+          <p class="eyebrow">Mise en relation</p>
+          <h1 class="mt-3 text-3xl font-bold sm:text-[40px]">Dites de qui vous avez besoin</h1>
+          <p class="mt-3 max-w-2xl text-[15.5px] leading-relaxed text-ink-600">
+            Plutôt que de parcourir 52 profils, décrivez votre besoin en trois clics&nbsp;:
+            la plateforme classe les membres les plus pertinents et explique pourquoi chacun
+            vous est proposé.
+          </p>
+        </div>
+      </section>
+
+      <div class="wrap grid gap-8 py-10 lg:grid-cols-[340px_1fr] lg:gap-12">
+        <!-- ============ FORMULAIRE ============ -->
+        <aside class="lg:sticky lg:top-24 lg:self-start">
+          <form class="card p-6" data-form-matching>
+            <fieldset>
+              <legend class="label mb-3">Je recherche…</legend>
+              <div class="space-y-1.5" data-intentions></div>
+            </fieldset>
+
+            <div class="mt-6">
+              <label class="label" for="m-secteur">Dans quel secteur&nbsp;?</label>
+              <select class="field" id="m-secteur"></select>
+            </div>
+
+            <div class="mt-4">
+              <label class="label" for="m-niveau">Expérience souhaitée</label>
+              <select class="field" id="m-niveau">
+                <option value="-1">Peu importe</option>
+                <option value="1">Au moins 1 an</option>
+                <option value="2">Au moins 5 ans</option>
+                <option value="3">Expert confirmé</option>
+              </select>
+            </div>
+
+            <div class="mt-4">
+              <label class="label" for="m-metier">Métier précis (facultatif)</label>
+              <select class="field" id="m-metier"></select>
+            </div>
+
+            <div class="mt-4">
+              <label class="label" for="m-ville">Ville</label>
+              <select class="field" id="m-ville"></select>
+            </div>
+
+            <div class="mt-4">
+              <label class="label" for="m-zone">Commune (facultatif)</label>
+              <select class="field" id="m-zone"></select>
+            </div>
+
+            <div class="mt-4">
+              <label class="label" for="m-mots">Mots-clés (facultatif)</label>
+              <input class="field" id="m-mots" placeholder="Ex. graphisme, immobilier, RH…" />
+            </div>
+
+            <button type="reset" class="btn-ghost mt-5 w-full" data-reinit>Réinitialiser</button>
+          </form>
+
+          <div class="mt-4 rounded-xl2 border border-ink-200 bg-ink-50 p-4">
+            <p class="flex items-center gap-2 text-[13px] font-semibold text-ink-800">
+              <span class="text-brand-600" data-picto="etincelle" data-taille="h-4 w-4"></span>
+              Comment le classement fonctionne
+            </p>
+            <p class="mt-2 text-[12.5px] leading-relaxed text-ink-500">
+              Le score combine la correspondance du besoin (déclaré par le membre), le secteur,
+              le niveau d’expérience, la proximité géographique et vos mots-clés. Aucune
+              intelligence artificielle, aucune donnée de contact&nbsp;: uniquement les
+              informations du formulaire d’inscription.
+            </p>
+          </div>
+        </aside>
+
+        <!-- ============ RÉSULTATS ============ -->
+        <section>
+          <p class="text-[14px] text-ink-600" data-resume aria-live="polite"></p>
+          <div class="mt-4 space-y-3" data-resultats></div>
+          <div class="hidden py-16 text-center" data-vide>
+            <p class="font-display text-lg font-bold">Aucun profil ne correspond exactement</p>
+            <p class="mx-auto mt-2 max-w-sm text-[14.5px] leading-relaxed text-ink-500">
+              Élargissez le secteur ou le niveau d’expérience. Vous pouvez aussi publier votre
+              besoin dans les opportunités&nbsp;: un membre non référencé pourra y répondre.
+            </p>
+            <a class="btn-primary mt-6" href="opportunites.html#publier">Publier mon besoin</a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="border-t border-ink-200 bg-ink-50">
+      <div class="wrap flex flex-wrap items-center justify-between gap-4 py-8">
+        <p class="max-w-xl text-[13px] leading-relaxed text-ink-500">
+          <strong class="font-semibold text-ink-700">Confidentialité —</strong> les suggestions
+          n’exposent aucune coordonnée. Le contact se fait par demande de mise en relation.
+        </p>
+        <span class="text-[12.5px] text-ink-500" data-maj></span>
+      </div>
+    </footer>
+
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/site.js"></script>
+    <script src="assets/js/connexion.js"></script>
+    <script src="assets/js/chatbot.js"></script>
+  </body>
+</html>

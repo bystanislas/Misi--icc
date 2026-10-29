@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Espace emploi — ICC Riviera 2 · MISI</title>
+    <meta name="description" content="CVthèque, offres d’emploi et candidatures spontanées de la communauté ICC Riviera 2." />
+    <meta name="theme-color" content="#366a82" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Annuaire MISI" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body>
+    <header data-entete class="sticky top-0 z-40 border-b border-ink-200 bg-white/85 backdrop-blur-md transition-shadow">
+      <div class="wrap flex h-16 items-center gap-4">
+        <a href="index.html" class="flex shrink-0 items-center gap-3" aria-label="Accueil — Annuaire des compétences MISI">
+          <img src="assets/logo-misi-marque.png" width="429" height="161" class="h-9 w-auto"
+               alt="MISI — Ministère de l’Innovation et des Sphères d’Influence" />
+          <span class="hidden border-l border-ink-200 pl-3 leading-tight sm:block">
+            <span class="block font-display text-[14.5px] font-bold text-ink-900">Annuaire des compétences</span>
+            <span class="block text-[11px] text-ink-500">ICC Riviera 2</span>
+          </span>
+        </a>
+        <nav class="ml-auto hidden items-center gap-0.5 lg:flex" aria-label="Navigation principale">
+          <a class="btn-ghost" href="index.html">Accueil</a>
+          <a class="btn-ghost" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost bg-ink-100 text-ink-900" href="emploi.html" aria-current="page">Emploi</a>
+          <a class="btn-ghost" href="opportunites.html">Opportunités</a>
+          <a class="btn-ghost" href="connexion.html">Mise en relation</a>
+        </nav>
+        <a class="btn-accent ml-auto hidden lg:ml-2 lg:inline-flex" href="rejoindre.html">Inscrire mon profil</a>
+        <button data-menu-bouton class="btn-ghost ml-auto p-2 lg:hidden" aria-expanded="false" aria-label="Ouvrir le menu">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+      </div>
+      <div data-menu class="hidden border-t border-ink-200 bg-white lg:hidden">
+        <nav class="wrap flex flex-col py-3">
+          <a class="btn-ghost justify-start" href="index.html">Accueil</a>
+          <a class="btn-ghost justify-start" href="annuaire.html">Annuaire</a>
+          <a class="btn-ghost justify-start" href="emploi.html">Emploi</a>
+          <a class="btn-ghost justify-start" href="accompagnement.html">Projets</a>
+          <a class="btn-ghost justify-start" href="connexion.html">Mise en relation</a>
+          <a class="btn-accent mt-2" href="rejoindre.html">Inscrire mon profil</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============ BANDEAU ============ -->
+      <section class="border-b border-ink-200 bg-gradient-to-b from-brand-50 to-white">
+        <div class="wrap py-10 sm:py-12">
+          <p class="eyebrow">Espace emploi</p>
+          <h1 class="mt-3 text-3xl font-bold sm:text-[40px]">Des compétences disponibles, tout de suite</h1>
+          <p class="mt-3 max-w-2xl text-[15.5px] leading-relaxed text-ink-600">
+            <strong class="font-semibold text-ink-800" data-nb-candidats>—</strong> membres de la
+            communauté cherchent un poste aujourd’hui. Parcourez leurs profils, ou publiez une
+            offre&nbsp;: elle sera vue par les personnes concernées, pas par un site d’annonces.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a class="btn-primary" href="#candidats">Parcourir les candidats</a>
+            <a class="btn-secondary" href="#publier">Publier une offre</a>
+            <a class="btn-accent" href="cv.html">
+              <span data-picto="plus" data-taille="h-4 w-4"></span> Créer mon CV
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ OFFRES ============ -->
+      <section class="wrap py-12">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div class="max-w-xl">
+            <h2 class="text-2xl font-bold sm:text-3xl">Offres en cours</h2>
+            <p class="mt-2 text-[15px] leading-relaxed text-ink-600">
+              Les postes proposés par les membres, leurs entreprises et les partenaires de l’église.
+            </p>
+          </div>
+          <a class="btn-secondary" href="#publier">Proposer un poste</a>
+        </div>
+        <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3" data-offres></div>
+        <div class="mt-6 rounded-xl2 border border-dashed border-ink-300 bg-ink-50 px-6 py-12 text-center" data-offres-vide>
+          <p class="font-display text-[17px] font-bold text-ink-900">Aucune offre publiée pour l’instant</p>
+          <p class="mx-auto mt-2 max-w-md text-[14.5px] leading-relaxed text-ink-500">
+            C’est normal au démarrage&nbsp;: l’annuaire compte aujourd’hui beaucoup plus de
+            candidats que de recruteurs. En attendant, les entreprises intéressées parcourent
+            directement les profils ci-dessous.
+          </p>
+          <a class="btn-primary mt-6" href="#publier">Publier la première offre</a>
+        </div>
+      </section>
+
+      <!-- ============ CVTHÈQUE ============ -->
+      <section id="candidats" class="border-y border-ink-200 bg-ink-50 py-12">
+        <div class="wrap">
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <div class="max-w-xl">
+              <h2 class="text-2xl font-bold sm:text-3xl">Candidats disponibles</h2>
+              <p class="mt-2 text-[15px] leading-relaxed text-ink-600">
+                Membres ayant déclaré rechercher un emploi. Aucune coordonnée n’est affichée&nbsp;:
+                la mise en relation passe par le secrétariat MISI.
+              </p>
+            </div>
+            <a class="btn-secondary" href="annuaire.html">Voir tous les profils</a>
+          </div>
+
+          <div class="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="relative sm:col-span-2 lg:col-span-1">
+              <span class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-400" data-picto="loupe"></span>
+              <input id="q" type="search" class="field pl-11" placeholder="Métier, secteur, commune…"
+                     aria-label="Rechercher un candidat" />
+            </div>
+            <select id="secteur" class="field" aria-label="Filtrer par secteur"></select>
+            <select id="metier" class="field" aria-label="Filtrer par métier"></select>
+            <select id="commune" class="field" aria-label="Filtrer par commune"></select>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2" data-niveaux></div>
+
+          <p class="mt-6 text-[14px] text-ink-600" data-resume aria-live="polite"></p>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3" data-candidats></div>
+          <div class="hidden py-14 text-center" data-candidats-vide>
+            <p class="font-display text-lg font-bold">Aucun candidat sur ces critères</p>
+            <p class="mt-2 text-[14.5px] text-ink-500">Élargissez la recherche, ou publiez votre offre pour qu’elle circule.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CANDIDATURE SPONTANÉE ============ -->
+      <section class="wrap py-14">
+        <div class="grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
+          <div>
+            <p class="eyebrow">Candidature spontanée</p>
+            <h2 class="mt-3 text-2xl font-bold sm:text-3xl">Vous cherchez un poste&nbsp;?</h2>
+            <p class="mt-3 text-[15.5px] leading-relaxed text-ink-600">
+              Déposez votre candidature même sans offre publiée. Le secrétariat MISI la transmet
+              aux membres et aux entreprises du réseau dès qu’un besoin correspond à votre profil.
+            </p>
+            <ul class="mt-7 space-y-4">
+              <li class="flex gap-3.5">
+                <span class="mt-0.5 shrink-0 text-brand-600" data-picto="check" data-taille="h-5 w-5"></span>
+                <span class="text-[14.5px] leading-relaxed text-ink-700">
+                  <strong class="font-semibold text-ink-900">Pas encore de CV&nbsp;?</strong>
+                  Le <a class="font-semibold text-brand-600 underline" href="cv.html">générateur de CV</a>
+                  en produit un propre en quelques minutes.
+                </span>
+              </li>
+              <li class="flex gap-3.5">
+                <span class="mt-0.5 shrink-0 text-brand-600" data-picto="check" data-taille="h-5 w-5"></span>
+                <span class="text-[14.5px] leading-relaxed text-ink-700">
+                  <strong class="font-semibold text-ink-900">Vos coordonnées ne sont pas publiées.</strong>
+                  Elles ne servent qu’au secrétariat pour vous joindre.
+                </span>
+              </li>
+              <li class="flex gap-3.5">
+                <span class="mt-0.5 shrink-0 text-brand-600" data-picto="check" data-taille="h-5 w-5"></span>
+                <span class="text-[14.5px] leading-relaxed text-ink-700">
+                  <strong class="font-semibold text-ink-900">Un profil dans l’annuaire aide.</strong>
+                  Les recruteurs parcourent la CVthèque avant de publier une offre.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <form class="card p-6 sm:p-8" data-form-candidature>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div class="sm:col-span-2">
+                <label class="label" for="c-nom">Nom et prénoms <span class="text-brique-600">*</span></label>
+                <input class="field" id="c-nom" name="nom" required autocomplete="name" />
+              </div>
+              <div>
+                <label class="label" for="c-email">E-mail <span class="text-brique-600">*</span></label>
+                <input class="field" id="c-email" name="email" type="email" required autocomplete="email" />
+              </div>
+              <div>
+                <label class="label" for="c-tel">Téléphone <span class="text-brique-600">*</span></label>
+                <input class="field" id="c-tel" name="telephone" type="tel" required autocomplete="tel" />
+              </div>
+              <div>
+                <label class="label" for="c-poste">Poste recherché</label>
+                <input class="field" id="c-poste" name="poste" placeholder="Ex. Assistant comptable" />
+              </div>
+              <div>
+                <label class="label" for="c-secteur">Secteur</label>
+                <select class="field" id="c-secteur" name="secteur"></select>
+              </div>
+              <div>
+                <label class="label" for="c-exp">Expérience</label>
+                <select class="field" id="c-exp" name="experience"></select>
+              </div>
+              <div>
+                <label class="label" for="c-dispo">Disponibilité</label>
+                <select class="field" id="c-dispo" name="disponibilite">
+                  <option>Immédiate</option>
+                  <option>Sous 1 mois</option>
+                  <option>Sous 3 mois</option>
+                  <option>À convenir</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="label" for="c-lien">Lien vers votre CV (facultatif)</label>
+                <input class="field" id="c-lien" name="lien_cv" type="url"
+                       placeholder="https://drive.google.com/…  ou  https://linkedin.com/in/…" />
+                <p class="mt-1.5 text-[12px] leading-relaxed text-ink-500">
+                  Le dépôt de fichier arrivera avec la base de données. En attendant, un lien
+                  Drive, Dropbox ou LinkedIn fait parfaitement l’affaire.
+                </p>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="label" for="c-msg">Quelques mots sur votre parcours <span class="text-brique-600">*</span></label>
+                <textarea class="field" id="c-msg" name="message" rows="4" required
+                          placeholder="Formation, expériences, ce que vous cherchez…"></textarea>
+              </div>
+            </div>
+
+            <div class="mt-5 rounded-xl2 bg-brand-50 p-4">
+              <label class="flex cursor-pointer gap-3">
+                <input type="checkbox" name="consentement" value="oui" required
+                       class="mt-0.5 h-4 w-4 shrink-0 rounded border-brand-300 text-brand-600 focus:ring-brand-600" />
+                <span class="text-[12.5px] leading-relaxed text-brand-900">
+                  J’autorise le secrétariat MISI à transmettre ma candidature aux membres et
+                  entreprises du réseau susceptibles de recruter.
+                </span>
+              </label>
+            </div>
+
+            <div class="mt-5 flex flex-col gap-2" data-actions></div>
+            <p class="mt-3 hidden rounded-lg px-3.5 py-3 text-[13px] leading-relaxed" data-ok></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- ============ PUBLIER UNE OFFRE ============ -->
+      <section id="publier" class="border-t border-ink-200 bg-ink-50 py-14">
+        <div class="wrap grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
+          <div>
+            <p class="eyebrow">Recruteurs</p>
+            <h2 class="mt-3 text-2xl font-bold sm:text-3xl">Publier une offre</h2>
+            <p class="mt-3 text-[15.5px] leading-relaxed text-ink-600">
+              Un poste à pourvoir dans votre entreprise ou celle d’un proche&nbsp;? Décrivez-le.
+              Le secrétariat MISI valide puis publie l’offre, et la diffuse aux profils
+              correspondants.
+            </p>
+            <div class="mt-7 rounded-xl2 border border-ink-200 bg-white p-5">
+              <p class="text-[13px] font-semibold text-ink-800">Ce que voient les candidats</p>
+              <p class="mt-2 text-[12.5px] leading-relaxed text-ink-500">
+                L’intitulé, l’entreprise, le lieu, le type de contrat et la description. Vos
+                coordonnées personnelles ne sont jamais publiées&nbsp;: les candidatures
+                transitent par le secrétariat.
+              </p>
+            </div>
+          </div>
+
+          <form class="card p-6 sm:p-8" data-form-offre>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div class="sm:col-span-2">
+                <label class="label" for="o-titre">Intitulé du poste <span class="text-brique-600">*</span></label>
+                <input class="field" id="o-titre" name="titre" required placeholder="Ex. Comptable junior" />
+              </div>
+              <div>
+                <label class="label" for="o-entreprise">Entreprise / structure</label>
+                <input class="field" id="o-entreprise" name="entreprise" />
+              </div>
+              <div>
+                <label class="label" for="o-contrat">Type de contrat</label>
+                <select class="field" id="o-contrat" name="contrat">
+                  <option>CDI</option>
+                  <option>CDD</option>
+                  <option>Stage</option>
+                  <option>Alternance</option>
+                  <option>Mission / freelance</option>
+                  <option>Temps partiel</option>
+                  <option>Bénévolat</option>
+                </select>
+              </div>
+              <div>
+                <label class="label" for="o-secteur">Secteur</label>
+                <select class="field" id="o-secteur" name="secteur"></select>
+              </div>
+              <div>
+                <label class="label" for="o-metier">Métier</label>
+                <select class="field" id="o-metier" name="metier"></select>
+              </div>
+              <div>
+                <label class="label" for="o-lieu">Lieu</label>
+                <input class="field" id="o-lieu" name="lieu" placeholder="Ex. Cocody Riviera, ou Télétravail" />
+              </div>
+              <div>
+                <label class="label" for="o-exp">Expérience attendue</label>
+                <select class="field" id="o-exp" name="experience"></select>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="label" for="o-desc">Description du poste <span class="text-brique-600">*</span></label>
+                <textarea class="field" id="o-desc" name="description" rows="4" required
+                          placeholder="Missions, profil recherché, conditions…"></textarea>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="label" for="o-contact">Votre nom <span class="text-brique-600">*</span></label>
+                <input class="field" id="o-contact" name="contact" required autocomplete="name" />
+              </div>
+            </div>
+
+            <div class="mt-5 flex flex-col gap-2" data-actions-offre></div>
+            <p class="mt-3 hidden rounded-lg px-3.5 py-3 text-[13px] leading-relaxed" data-ok-offre></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-ink-200 bg-ink-50">
+      <div class="wrap flex flex-wrap items-center justify-between gap-4 py-8">
+        <p class="max-w-xl text-[13px] leading-relaxed text-ink-500">
+          <strong class="font-semibold text-ink-700">Confidentialité —</strong> la CVthèque
+          n’affiche ni téléphone, ni e-mail, ni adresse. Les candidatures et les offres
+          transitent par le secrétariat MISI.
+        </p>
+        <span class="text-[12.5px] text-ink-500" data-maj></span>
+      </div>
+    </footer>
+
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/site.js"></script>
+    <script src="assets/js/emploi.js"></script>
+    <script src="assets/js/chatbot.js"></script>
+  </body>
+</html>

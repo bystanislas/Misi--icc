@@ -1,0 +1,17 @@
+{
+  "_lisezmoi": "Offres d'emploi publiées. Le secrétariat MISI ajoute une entrée après validation. Champs : id, titre, entreprise, contrat, secteur, metier, lieu, experience, description, publieeLe (AAAA-MM-JJ), expireLe (facultatif). Supprimer ou vider `offres` remet la page à son état « aucune offre ».",
+  "_exemple": {
+    "id": "off001",
+    "titre": "Comptable junior",
+    "entreprise": "Cabinet Kouassi & Associés",
+    "contrat": "CDI",
+    "secteur": "Banque / Finance",
+    "metier": "Comptable",
+    "lieu": "Cocody Riviera",
+    "experience": "1-5 ans",
+    "description": "Tenue de la comptabilité générale, rapprochements bancaires, préparation des déclarations fiscales.",
+    "publieeLe": "2026-09-01",
+    "expireLe": "2026-10-15"
+  },
+  "offres": []
+}
