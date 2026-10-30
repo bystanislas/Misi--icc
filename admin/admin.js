@@ -158,6 +158,29 @@ function synchroniser() {
 }
 
 const docs = (nom) => etat.donnees[nom] || [];
+
+/* Rôles — miroir de firestore.rules, qui les applique réellement.
+ * Ici, ils ne servent qu'à n'afficher que les actions permises. */
+const ROLES = {
+  super_admin: ["Super-administrateur", "Tous les droits, dont les administrateurs et les paramètres."],
+  gestionnaire: ["Gestionnaire", "Membres, offres, référentiels, validation des inscriptions, suppressions et traitement des demandes."],
+  secretariat: ["Secrétariat", "Traite les demandes : statut, notes et réponses. Ne modifie ni les membres ni les offres."],
+  lecteur: ["Lecteur", "Consultation seule."],
+};
+const DROITS = {
+  gestion: ["super_admin", "gestionnaire"],
+  traitement: ["super_admin", "gestionnaire", "secretariat"],
+  super: ["super_admin"],
+};
+// Sans champ role : super-administrateur (premier compte créé dans la console).
+const roleDe = (a) => (a && ROLES[a.role] ? a.role : "super_admin");
+const peut = (droit) => DROITS[droit].includes(etat.role);
+
+/** Met une modale en consultation seule : champs figés, actions retirées. */
+function lectureSeule(m) {
+  $$(".modale-corps :is(input, select, textarea)", m).forEach((c) => (c.disabled = true));
+  $$("[data-ecriture]", m).forEach((b) => b.remove());
+}
 const reglages = () => docs("config").find((d) => d.id === "admin") || {};
 
 /** Référentiels en vigueur : ceux de l'administration, sinon le fichier statique. */
@@ -412,10 +435,11 @@ function editerMembre(membre, { depuisInscription } = {}) {
       <p class="aide">Les coordonnées (e-mail, téléphone) ne sont jamais copiées dans le profil public :
         elles restent dans l’inscription d’origine.</p>`,
     pied: `
-      ${nouveau ? "" : `<button type="button" class="btn btn-danger gauche" data-supprimer>Supprimer</button>`}
-      <button type="button" class="btn btn-secondaire" data-fermer>Annuler</button>
-      <button type="submit" class="btn btn-primaire" value="enregistrer">${nouveau ? "Créer le profil" : "Enregistrer"}</button>`,
+      ${nouveau ? "" : `<button type="button" class="btn btn-danger gauche" data-supprimer data-ecriture>Supprimer</button>`}
+      <button type="button" class="btn btn-secondaire" data-fermer>${peut("gestion") ? "Annuler" : "Fermer"}</button>
+      <button type="submit" class="btn btn-primaire" value="enregistrer" data-ecriture>${nouveau ? "Créer le profil" : "Enregistrer"}</button>`,
   });
+  if (!peut("gestion")) lectureSeule(m);
 
   const form = $("[data-modale-form]", m);
   $("[data-fermer]", m).addEventListener("click", fermerModale);
@@ -511,12 +535,12 @@ function vueMembres() {
   return `
     <div class="entete-vue">
       <h1>Membres <span class="muted">(${tous.length})</span></h1>
-      ${manquants ? `<button class="btn btn-secondaire" data-importer>Importer le fichier statique (${manquants})</button>` : ""}
+      ${manquants && peut("gestion") ? `<button class="btn btn-secondaire" data-importer>Importer le fichier statique (${manquants})</button>` : ""}
       <button class="btn btn-secondaire" data-exporter ${tous.length ? "" : "disabled"}>Exporter membres.json</button>
-      <button class="btn btn-accent" data-nouveau>+ Nouveau membre</button>
+      ${peut("gestion") ? `<button class="btn btn-accent" data-nouveau>+ Nouveau membre</button>` : ""}
     </div>
     ${
-      !tous.length
+      !tous.length && peut("gestion")
         ? `<div class="alerte alerte-orange"><p>Aucun membre en base. Le site affiche aujourd’hui les ${etat.statiques.length}
            profils du fichier <code>data/membres.json</code>. Importez-les pour pouvoir les modifier ici.</p>
            <button class="btn btn-accent" data-importer>Importer les ${etat.statiques.length} profils</button></div>`
@@ -553,7 +577,7 @@ function vueMembres() {
 function brancherMembres(v) {
   $$("[data-importer]", v).forEach((b) => b.addEventListener("click", importerMembres));
   $("[data-exporter]", v).addEventListener("click", exporterMembres);
-  $("[data-nouveau]", v).addEventListener("click", () => editerMembre(null));
+  $("[data-nouveau]", v)?.addEventListener("click", () => editerMembre(null));
   $$("tbody tr", v).forEach((tr) =>
     tr.addEventListener("click", () => editerMembre(docs("membres").find((m) => m.id === tr.dataset.id))),
   );
@@ -590,10 +614,11 @@ function editerOffre(offre, { depuisProposition } = {}) {
     titre: nouveau ? "Nouvelle offre" : offre.titre,
     corps: `<div class="grille-form">${defs.map((d) => champ(d, valeurs[d.k])).join("")}</div>`,
     pied: `
-      ${nouveau ? "" : `<button type="button" class="btn btn-danger gauche" data-supprimer>Supprimer</button>`}
-      <button type="button" class="btn btn-secondaire" data-fermer>Annuler</button>
-      <button type="submit" class="btn btn-primaire" value="enregistrer">${nouveau ? "Créer l’offre" : "Enregistrer"}</button>`,
+      ${nouveau ? "" : `<button type="button" class="btn btn-danger gauche" data-supprimer data-ecriture>Supprimer</button>`}
+      <button type="button" class="btn btn-secondaire" data-fermer>${peut("gestion") ? "Annuler" : "Fermer"}</button>
+      <button type="submit" class="btn btn-primaire" value="enregistrer" data-ecriture>${nouveau ? "Créer l’offre" : "Enregistrer"}</button>`,
   });
+  if (!peut("gestion")) lectureSeule(m);
   const form = $("[data-modale-form]", m);
   $("[data-fermer]", m).addEventListener("click", fermerModale);
   form.addEventListener("submit", async (e) => {
@@ -637,7 +662,7 @@ function vueOffres() {
   return `
     <div class="entete-vue">
       <h1>Offres d’emploi <span class="muted">(${lignes.length})</span></h1>
-      <button class="btn btn-accent" data-nouveau>+ Nouvelle offre</button>
+      ${peut("gestion") ? `<button class="btn btn-accent" data-nouveau>+ Nouvelle offre</button>` : ""}
     </div>
     <div class="carte table-wrap">
       ${
@@ -659,7 +684,7 @@ function vueOffres() {
 }
 
 function brancherOffres(v) {
-  $("[data-nouveau]", v).addEventListener("click", () => editerOffre(null));
+  $("[data-nouveau]", v)?.addEventListener("click", () => editerOffre(null));
   $$("tbody tr", v).forEach((tr) =>
     tr.addEventListener("click", () => editerOffre(docs("offres").find((o) => o.id === tr.dataset.id))),
   );
@@ -806,8 +831,9 @@ function ouvrirDemande(nom, d) {
   const statut = statutDe(nom, d);
   const reponses = liste(d.reponses);
 
-  const actionsSpecifiques =
-    nom === "inscriptions" && statut !== "validee"
+  const actionsSpecifiques = !peut("gestion")
+    ? ""
+    : nom === "inscriptions" && statut !== "validee"
       ? `<button type="button" class="btn btn-accent" data-valider>Valider → créer le profil</button>`
       : nom === "inscriptions" && d.membreId
         ? `<button type="button" class="btn btn-secondaire" data-voir-membre>Voir le profil</button>`
@@ -838,11 +864,12 @@ function ouvrirDemande(nom, d) {
           : `<p class="muted">Aucune réponse pour l’instant.</p>`
       }`,
     pied: `
-      <button type="button" class="btn btn-danger gauche" data-supprimer>Supprimer</button>
+      ${peut("gestion") ? `<button type="button" class="btn btn-danger gauche" data-supprimer>Supprimer</button>` : ""}
       ${actionsSpecifiques}
-      <button type="button" class="btn btn-secondaire" data-repondre ${c.email || c.telephone ? "" : "disabled title='Aucune coordonnée'"}>Répondre</button>
-      <button type="submit" class="btn btn-primaire" value="enregistrer">Enregistrer</button>`,
+      ${peut("traitement") ? `<button type="button" class="btn btn-secondaire" data-repondre ${c.email || c.telephone ? "" : "disabled title='Aucune coordonnée'"}>Répondre</button>
+      <button type="submit" class="btn btn-primaire" value="enregistrer">Enregistrer</button>` : ""}`,
   });
+  if (!peut("traitement")) lectureSeule(m);
 
   const form = $("[data-modale-form]", m);
   form.addEventListener("submit", async (e) => {
@@ -851,11 +878,11 @@ function ouvrirDemande(nom, d) {
     const { statut: s, notes } = lireFormulaire(form, [{ k: "statut" }, { k: "notes" }]);
     if (await action(() => updateDoc(doc(db, nom, d.id), { statut: s, notes, majLe: serverTimestamp() }), "Enregistré.")) fermerModale();
   });
-  $("[data-supprimer]", m).addEventListener("click", async () => {
+  $("[data-supprimer]", m)?.addEventListener("click", async () => {
     if (!confirm("Supprimer définitivement cet élément ? Les coordonnées associées seront perdues.")) return;
     if (await action(() => deleteDoc(doc(db, nom, d.id)), "Supprimé.")) fermerModale();
   });
-  $("[data-repondre]", m).addEventListener("click", () => repondre(nom, d));
+  $("[data-repondre]", m)?.addEventListener("click", () => repondre(nom, d));
   $("[data-valider]", m)?.addEventListener("click", () => editerMembre(membreDepuisInscription(d), { depuisInscription: d }));
   $("[data-voir-membre]", m)?.addEventListener("click", () => {
     const membre = docs("membres").find((x) => x.id === d.membreId);
@@ -1016,41 +1043,54 @@ function brancherFile(nom, v) {
 /* ---------------------------------------------------------------- *
  * 8. Administrateurs
  * ---------------------------------------------------------------- */
+const optionsRoles = () => Object.entries(ROLES).map(([k, [l]]) => [k, l]);
+
 function vueAdmins() {
-  const lignes = docs("admins");
+  const lignes = [...docs("admins")].sort((a, b) => String(a.email || "~").localeCompare(String(b.email || "~")));
   return `
     <div class="entete-vue">
       <h1>Administrateurs <span class="muted">(${lignes.length})</span></h1>
       <button class="btn btn-accent" data-nouveau>+ Ajouter un administrateur</button>
     </div>
-    <div class="carte table-wrap">
-      <table><thead><tr><th>Compte</th><th class="col-option">UID</th><th class="col-option">Ajouté le</th><th></th></tr></thead>
+    <div class="carte table-wrap" style="margin-bottom:16px">
+      <table><thead><tr><th>Compte</th><th>Rôle</th><th class="col-option">UID</th><th class="col-option">Ajouté le</th><th></th></tr></thead>
       <tbody>${lignes
-        .map(
-          (a) => `<tr>
-          <td><b>${esc(a.email || "—")}</b>${a.nom ? `<span class="sous">${esc(a.nom)}</span>` : ""}</td>
+        .map((a) => {
+          const moi = a.id === etat.utilisateur.uid;
+          return `<tr>
+          <td><b>${esc(a.email || "— compte sans e-mail —")}</b>${a.nom ? `<span class="sous">${esc(a.nom)}</span>` : ""}</td>
+          <td>${
+            moi
+              ? `<span class="pastille p-bleu">${esc(ROLES[roleDe(a)][0])}</span>`
+              : `<select class="champ" data-role="${esc(a.id)}" aria-label="Rôle de ${esc(a.email || a.id)}">
+                  ${optionsRoles().map(([k, l]) => `<option value="${k}"${k === roleDe(a) ? " selected" : ""}>${esc(l)}</option>`).join("")}
+                </select>`
+          }</td>
           <td class="col-option"><code>${esc(a.id)}</code></td>
           <td class="col-option">${esc(dateCourte(a.creeLe))}</td>
-          <td>${
-            a.id === etat.utilisateur.uid
-              ? `<span class="pastille p-bleu">Vous</span>`
-              : `<button class="btn btn-danger btn-sm" data-retirer="${esc(a.id)}">Retirer</button>`
-          }</td></tr>`,
-        )
+          <td>${moi ? `<span class="pastille p-bleu">Vous</span>` : `<button class="btn btn-danger btn-sm" data-retirer="${esc(a.id)}">Retirer</button>`}</td></tr>`;
+        })
         .join("")}</tbody></table>
+    </div>
+    <div class="carte" style="padding:16px 20px">
+      <h3 style="margin-bottom:8px">Ce que permet chaque rôle</h3>
+      <dl class="fiche">${Object.values(ROLES).map(([l, d]) => `<dt>${esc(l)}</dt><dd>${esc(d)}</dd>`).join("")}</dl>
+      <p class="aide">Les droits sont appliqués par les règles de sécurité de la base, pas seulement par cet écran.
+        Votre propre rôle ne peut être modifié que par un autre super-administrateur.</p>
     </div>`;
 }
 
 function ajouterAdmin() {
   const defs = [
     { k: "nom", label: "Nom", large: true },
+    { k: "role", label: "Rôle", type: "select", vide: false, options: optionsRoles(), aide: "Modifiable ensuite depuis la liste." },
     { k: "email", label: "E-mail", type: "email", requis: true },
     { k: "mdp", label: "Mot de passe provisoire", aide: "6 caractères minimum. Laisser vide si le compte existe déjà (renseigner alors l’UID)." },
     { k: "uid", label: "UID d’un compte existant", large: true, aide: "Facultatif : visible dans Firebase › Authentication, ou sur l’écran « Accès non autorisé »." },
   ];
   const m = ouvrirModale({
     titre: "Ajouter un administrateur",
-    corps: `<div class="grille-form">${defs.map((d) => champ(d, "")).join("")}</div>`,
+    corps: `<div class="grille-form">${defs.map((d) => champ(d, d.k === "role" ? "secretariat" : "")).join("")}</div>`,
     pied: `<button type="submit" class="btn btn-primaire" value="enregistrer">Ajouter</button>`,
   });
   const form = $("[data-modale-form]", m);
@@ -1074,7 +1114,14 @@ function ajouterAdmin() {
           await deleteApp(secondaire);
         }
       }
-      await setDoc(doc(db, "admins", uid), { email: v.email, nom: v.nom, creeLe: serverTimestamp(), ajoutePar: etat.utilisateur.email });
+      if (uid === etat.utilisateur.uid) throw new Error("C’est votre propre compte : il est déjà administrateur.");
+      await setDoc(doc(db, "admins", uid), {
+        email: v.email,
+        nom: v.nom,
+        role: v.role,
+        creeLe: serverTimestamp(),
+        ajoutePar: etat.utilisateur.email,
+      });
     }, "Administrateur ajouté.");
     e.submitter.disabled = false;
     if (ok) fermerModale();
@@ -1083,6 +1130,15 @@ function ajouterAdmin() {
 
 function brancherAdmins(v) {
   $("[data-nouveau]", v).addEventListener("click", ajouterAdmin);
+  $$("[data-role]", v).forEach((sel) =>
+    sel.addEventListener("change", async () => {
+      const cible = docs("admins").find((a) => a.id === sel.dataset.role);
+      const ancien = roleDe(cible);
+      const ok = confirm(`Passer ${cible?.email || "ce compte"} de « ${ROLES[ancien][0]} » à « ${ROLES[sel.value][0]} » ?`);
+      if (!ok || !(await action(() => updateDoc(doc(db, "admins", sel.dataset.role), { role: sel.value, majLe: serverTimestamp(), majPar: etat.utilisateur.email }), "Rôle modifié.")))
+        sel.value = ancien;
+    }),
+  );
   $$("[data-retirer]", v).forEach((b) =>
     b.addEventListener("click", async (e) => {
       e.stopPropagation();
@@ -1234,8 +1290,8 @@ function vueReferentiels() {
   return `
     <div class="entete-vue">
       <h1>Référentiels</h1>
-      <button class="btn btn-secondaire" data-renommer>Renommer une valeur…</button>
-      ${perso ? `<button class="btn btn-danger" data-reinitialiser>Revenir au fichier statique</button>` : ""}
+      ${peut("gestion") ? `<button class="btn btn-secondaire" data-renommer>Renommer une valeur…</button>` : ""}
+      ${perso && peut("gestion") ? `<button class="btn btn-danger" data-reinitialiser>Revenir au fichier statique</button>` : ""}
     </div>
     <div class="alerte alerte-info"><p>Listes utilisées par l’annuaire, les filtres et le formulaire d’inscription.
       ${perso ? "Version <b>modifiée dans l’administration</b>." : "Version actuelle : <b>fichier statique</b> (data/membres.json)."}
@@ -1257,12 +1313,13 @@ function vueReferentiels() {
           .join("")}
       </div>
       <p class="aide">Un secteur ajouté reçoit sa liste de métiers après l’enregistrement.</p>
-      <button class="btn btn-primaire" type="submit" style="margin-top:14px">Enregistrer les référentiels</button>
+      ${peut("gestion") ? `<button class="btn btn-primaire" type="submit" style="margin-top:14px">Enregistrer les référentiels</button>` : ""}
     </form>`;
 }
 
 function brancherReferentiels(v) {
   const form = $("[data-form-ref]", v);
+  if (!peut("gestion")) return $$("textarea", form).forEach((t) => (t.readOnly = true));
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const avant = refCourant();
@@ -1474,7 +1531,7 @@ function vueTableau() {
   return `
     <div class="entete-vue"><h1>Tableau de bord</h1><a class="btn btn-secondaire" href="/" target="_blank" rel="noopener">Voir le site ↗</a></div>
     ${
-      !membres.length
+      !membres.length && peut("gestion")
         ? `<div class="alerte alerte-orange"><p><b>Étape 1 :</b> la base ne contient aucun membre. Le site affiche les
            ${etat.statiques.length} profils du fichier statique. Importez-les pour les gérer depuis l’administration.</p>
            <button class="btn btn-accent" data-importer>Importer les ${etat.statiques.length} profils</button></div>`
@@ -1526,10 +1583,20 @@ const VUES = {
   ...Object.fromEntries(Object.keys(FILES).map((nom) => [nom, [() => vueFile(nom), (v) => brancherFile(nom, v)]])),
 };
 
-const vueCourante = () => (VUES[location.hash.slice(1)] ? location.hash.slice(1) : "tableau");
+// Écrans réservés aux super-administrateurs.
+const VUES_SUPER = new Set(["admins", "parametres"]);
+const vueCourante = () => {
+  const nom = location.hash.slice(1);
+  return VUES[nom] && (!VUES_SUPER.has(nom) || peut("super")) ? nom : "tableau";
+};
 
 function rendre() {
   if (!etat.utilisateur || !etat.ref) return;
+  // Le rôle suit en direct le document admins/{uid} (changement par un super-admin).
+  const moi = docs("admins").find((a) => a.id === etat.utilisateur.uid);
+  if (moi) etat.role = roleDe(moi);
+  $$("[data-nav] a").forEach((a) => (a.hidden = VUES_SUPER.has(a.getAttribute("href").slice(1)) && !peut("super")));
+  $("[data-role-courant]").textContent = ROLES[etat.role][0];
   const nom = vueCourante();
   const v = $("[data-vue]");
   // Conserver le focus et le curseur du champ de recherche entre deux rendus.
@@ -1616,7 +1683,9 @@ onAuthStateChanged(auth, async (u) => {
 
   let admin = false;
   try {
-    admin = (await getDoc(doc(db, "admins", u.uid))).exists();
+    const fiche = await getDoc(doc(db, "admins", u.uid));
+    admin = fiche.exists();
+    if (admin) etat.role = roleDe(fiche.data());
   } catch (e) {
     console.warn("Vérification admin impossible :", e.code || e.message);
   }

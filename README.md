@@ -49,7 +49,18 @@ Les coordonnées (e-mail, téléphone) restent dans les dépôts : elles ne sont
 5. Ouvrir `https://<site>/admin/`, se connecter, puis **Tableau de bord › Importer les 52 profils**.
    Tant que `membres` est vide, le site affiche `data/membres.json` ; dès le premier profil en base, il affiche Firestore. D’où l’import en premier.
 
-Les administrateurs suivants s’ajoutent depuis l’écran **Administrateurs** (création du compte incluse).
+Les administrateurs suivants s’ajoutent depuis l’écran **Administrateurs** (création du compte incluse), avec un rôle.
+
+### Rôles
+
+| Rôle | Droits |
+|---|---|
+| Super-administrateur | Tout, dont les administrateurs et les paramètres. Un document `admins` sans champ `role` vaut super-administrateur (premier compte). |
+| Gestionnaire | Membres, offres, référentiels, validation des inscriptions, suppressions, traitement des demandes. |
+| Secrétariat | Traitement des demandes : statut, notes, réponses (e-mail, WhatsApp). Ne modifie ni les membres ni les offres, ne supprime rien. |
+| Lecteur | Consultation seule. |
+
+Les droits sont appliqués par `firestore.rules` (l’interface n’affiche que les actions permises). Un super-administrateur ne peut ni se retirer ni changer son propre rôle : un autre super-administrateur doit le faire.
 
 ## Ce que permet l’administration
 

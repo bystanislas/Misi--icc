@@ -5,9 +5,14 @@ rules_version = '2';
 // Public  : lit les membres et offres publiés ; dépose inscriptions,
 //           demandes, accompagnements, candidatures et offres proposées
 //           sans jamais pouvoir les relire.
-// Admins  : un document admins/{uid} donne tous les droits à ce compte.
-//           Le premier admin se crée à la main dans la console Firebase
-//           (voir README, section « Administration »).
+// Admins  : un document admins/{uid} ouvre l'administration à ce compte,
+//           avec un rôle (champ role) :
+//             super_admin   tout, dont administrateurs et paramètres
+//             gestionnaire  membres, offres, référentiels, suppressions
+//             secretariat   traitement des demandes (statut, notes, réponses)
+//             lecteur       consultation seule
+//           Sans champ role : super_admin (premier compte, créé à la main
+//           dans la console Firebase).
 //
 // Déploiement : npx firebase-tools deploy --only firestore:rules
 
@@ -17,6 +22,24 @@ service cloud.firestore {
     function estAdmin() {
       return request.auth != null
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function role() {
+      return get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.get("role", "super_admin");
+    }
+    function aRole(roles) {
+      return estAdmin() && role() in roles;
+    }
+    function superAdmin() {
+      return aRole(["super_admin"]);
+    }
+    // Membres, offres, référentiels, validation et suppressions.
+    function gestion() {
+      return aRole(["super_admin", "gestionnaire"]);
+    }
+    // Statut, notes et réponses sur les demandes reçues.
+    function traitement() {
+      return aRole(["super_admin", "gestionnaire", "secretariat"]);
     }
 
     // Dépôt public : horodatage serveur obligatoire, taille bornée,
@@ -29,54 +52,70 @@ service cloud.firestore {
 
     match /membres/{id} {
       allow read: if resource.data.publie == true || estAdmin();
-      allow write: if estAdmin();
+      allow write: if gestion();
     }
 
     match /offres/{id} {
       allow read: if resource.data.publie == true || estAdmin();
-      allow write: if estAdmin();
+      allow write: if gestion();
     }
 
     match /inscriptions/{id} {
-      allow create: if depotValide("a_valider") || estAdmin();
-      allow read, update, delete: if estAdmin();
+      allow create: if depotValide("a_valider") || gestion();
+      allow read: if estAdmin();
+      allow update: if traitement();
+      allow delete: if gestion();
     }
 
     match /accompagnements/{id} {
-      allow create: if depotValide("a_traiter") || estAdmin();
-      allow read, update, delete: if estAdmin();
+      allow create: if depotValide("a_traiter") || gestion();
+      allow read: if estAdmin();
+      allow update: if traitement();
+      allow delete: if gestion();
     }
 
     match /candidatures/{id} {
-      allow create: if depotValide("a_traiter") || estAdmin();
-      allow read, update, delete: if estAdmin();
+      allow create: if depotValide("a_traiter") || gestion();
+      allow read: if estAdmin();
+      allow update: if traitement();
+      allow delete: if gestion();
     }
 
     match /offres_proposees/{id} {
-      allow create: if depotValide("a_traiter") || estAdmin();
-      allow read, update, delete: if estAdmin();
+      allow create: if depotValide("a_traiter") || gestion();
+      allow read: if estAdmin();
+      allow update: if traitement();
+      allow delete: if gestion();
     }
 
     match /demandes/{id} {
-      allow create: if depotValide(null) || estAdmin();
-      allow read, update, delete: if estAdmin();
+      allow create: if depotValide(null) || gestion();
+      allow read: if estAdmin();
+      allow update: if traitement();
+      allow delete: if gestion();
     }
 
     // Paramètres de l'administration ; les référentiels sont lus par le site.
     match /config/{id} {
       allow read: if id == "referentiels" || estAdmin();
-      allow write: if estAdmin();
+      allow write: if (id == "referentiels" && gestion()) || superAdmin();
     }
 
     // File d'envoi de l'extension « Trigger Email » : elle écrit avec le
     // SDK Admin (hors règles) ; seuls les admins y déposent et y lisent.
     match /mail/{id} {
-      allow read, write: if estAdmin();
+      allow read: if estAdmin();
+      allow create: if traitement();
+      allow update, delete: if superAdmin();
     }
 
+    // Un super-administrateur gère les autres comptes, jamais le sien :
+    // impossible de se retirer ou de se rétrograder par erreur.
     match /admins/{uid} {
       allow read: if (request.auth != null && request.auth.uid == uid) || estAdmin();
-      allow write: if estAdmin();
+      allow create, update: if superAdmin() && uid != request.auth.uid
+        && request.resource.data.get("role", "super_admin") in ["super_admin", "gestionnaire", "secretariat", "lecteur"];
+      allow delete: if superAdmin() && uid != request.auth.uid;
     }
   }
 }
